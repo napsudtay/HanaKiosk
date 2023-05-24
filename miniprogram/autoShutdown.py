@@ -1,79 +1,51 @@
 from time import sleep
-import time
 from turtle import position
-import pyautogui #pyautogui
+
 import os
 import datetime
 
 
-delay_timer = 10 * 60 #sec
-count = 0;
-count_missing = 0;
-
-path = 'imageBtn/'
+access_token = 'B1lOLAjFGidIvy2sz6UUHUVQewc6KNjWFBnaKMifu2D'
 
 
-pyautogui.press('f11')  
-sleep(3)
-
-def unmute():
-    unmuteBTN = "unmuteBTN.jpg"
-    position = pyautogui.locateOnScreen(path + unmuteBTN, confidence=0.9)
-    if (position != None): #ถ้าเจอรูปให้ทำอะไร
-        print('found img unmuteBTN')
-        pyautogui.press('m')
-
-
-
-def loop():
-    global count, count_missing
-    btn_shutdown = ['index_btn.jpg']
-    btn_f11 = ['f11_1.jpg','f11_2.jpg']
-
-    for btn in btn_shutdown:
-        position = pyautogui.locateOnScreen(path + btn, confidence=0.9)
-        if (position != None):          #ถ้าเจอรูปให้ทำอะไร
-            # print(position[0])
-            # print('Found img shutdown' , count )
-            count_missing = 0
-            count = count + 1
-        else:                           #ถ้าไม่เจอรูปให้ทำอะไร
-            # print("No fonund img shutdown" , count_missing )
-            count = 0
-            count_missing = count_missing + 1
-
-    # if(count > delay_timer or count_missing > delay_timer):
-        # print('shutdown')
-        # os.system("shutdown /s /t 1") # for shutdown
-        # os.system("rundll32.exe powrprof.dll,SetSuspendState 0,1,0") # for sleep
-
-
-
-    for btn in btn_f11:    
-        position = pyautogui.locateOnScreen(path + btn, confidence=0.8)
-        if (position != None): #ถ้าเจอรูปให้ทำอะไร
-            print('found img f11')
-            pyautogui.press('f11')
-            pyautogui.press('f11')
-            position = pyautogui.locateOnScreen(path + btn, confidence=0.8)
-            if (position != None): #ถ้าเจอรูปให้ทำอะไร
-                pyautogui.press('f11')
-    
-def shutdown():
-
+def shutdown(shutdownTime):
     # get the current time
     now = datetime.datetime.now()
 
-
     if now.hour == 12 and now.minute == 20:
         os.system("shutdown /s /t 1")
-    elif now.hour == 2 :
+        send_line_notify(access_token)
+    elif now.hour == shutdownTime :
         os.system("shutdown /s /t 1")
-
-while(True):
-    sleep(1)
-    # loop()
-    unmute()
-    # shutdown()
-
+        send_line_notify(access_token)
     
+
+
+def send_line_notify(token, message):
+    # ------------ read id from notepad -------------
+    current_dir = os.path.dirname(os.path.abspath(__file__))
+
+    # Specify the relative path to your Notepad file
+    file_path = os.path.join(current_dir, '..', '..', 'ConfigHana', 'confighana.txt')
+
+    # Read the text from the Notepad file
+    with open(file_path, 'r') as file:
+        lines = file.readlines()
+
+    # Find the 'id' line and extract the value
+    id_line = next(line for line in lines if line.startswith('id='))
+    id_value = id_line.strip().split('=')[1]
+
+
+    message = 'Shut down:' + id_value
+
+
+
+    url = 'https://notify-api.line.me/api/notify'
+    headers = {'Authorization': 'Bearer ' + token}
+    data = {'message': message}
+    response = requests.post(url, headers=headers, data=data)
+    if response.status_code == 200:
+        print('Notification sent successfully.')
+    else:
+        print('Failed to send notification. Status code:', response.status_code)

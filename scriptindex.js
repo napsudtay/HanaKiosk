@@ -703,11 +703,12 @@ async function updateHomeFindBookingNumber(e) {
     ModalWarningWindowsContent.innerText = `ที่นี่คือสาขา ` + testSiteName;
     PopupWarningWindows();
     
-  } else if (bookingVal === "000000") {
+  } else if (bookingVal === "000") {
     var testSiteName = await getSite();
     ContentLoading.classList.remove("show-modal"); //ปิดหน้าต่างโหลดเนื้อหา
     PopupWarningWindows();
-    location.reload();
+    window.location.href = 'http://127.0.0.1:3001/testPage.html?id=' +id+ '&pass=' +pass ;
+    // location.reload();
   } else {
 
     await getToken();
