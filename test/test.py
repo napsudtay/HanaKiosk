@@ -28,4 +28,4 @@ repo.remotes.origin.fetch()
 repo.remotes.origin.pull(current_branch)
 
 # Run your custom logic or scripts here after the update
-print("Repository is up to date!")
+print("Repository is up to date!...")
