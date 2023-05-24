@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Show Calendar</title>
+    <style type="text/css">
+      .container {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        margin-top: 50px;
+      }
+
+      .btn {
+        padding: 10px;
+        background-color: #ff9900;
+        color: #fff;
+        border: none;
+        cursor: pointer;
+        font-size: 20px;
+      }
+
+      .calendar {
+        /* display: none; */
+        margin-top: 20px;
+        padding: 10px;
+        background-color: #f2f2f2;
+        border-radius: 5px;
+        box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+        width: 335px;
+        height: auto;
+      }
+
+      .calendar table {
+        width: 100%;
+        border-collapse: collapse;
+      }
+
+      .calendar th,
+      .calendar td {
+        padding: 10px;
+        text-align: center;
+        border: 1px solid #ddd;
+      }
+
+      .calendar th {
+        background-color: #ff9900;
+        color: #fff;
+      }
+
+      .calendar td:hover {
+        background-color: #ddd;
+        cursor: pointer;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <button class="btn" onclick="showCalendar(3)" id="btnDate">
+        Show Calendar
+      </button>
+      <div class="calendar" id="calendar">
+        <table>
+          <thead>
+            <tr>
+              <!-- <button id="lastMonth" onclick="lastMonth()"> < </button> -->
+              <th onclick="lastMonth()"><</th>
+              <th colspan="5" id="nameMonthOnCalenda">Choose Date</th>
+              <th onclick="nextMonth()">></th>
+              <!-- <button id="nextMonth" onclick="nextMonth()"> > </button> -->
+            </tr>
+
+            <tr>
+              <th>Sun</th>
+              <th>Mon</th>
+              <th>Tue</th>
+              <th>Wed</th>
+              <th>Thu</th>
+              <th>Fri</th>
+              <th>Sat</th>
+            </tr>
+          </thead>
+
+          <tbody></tbody>
+          <tbody id="day_on_calenda"></tbody>
+        </table>
+      </div>
+    </div>
+
+    <script type="text/javascript">
+      function showCalendar(day) {
+        var calendar = document.getElementById("calendar");
+        if (calendar.style.display === "none") {
+          calendar.style.display = "block";
+        } else {
+          calendar.style.display = "none";
+        }
+      }
+
+      function chooseDate(day, month_, year_) {
+        day = changeToTwoDigi(day);
+        month_ = changeToTwoDigi(month_);
+
+        var btn = document.getElementById("btnDate");
+        btn.innerHTML = "Selected Date: " + day + "/" + month_ + "/" + year_;
+        var calendar = document.getElementById("calendar");
+        calendar.style.display = "none";
+      }
+
+      function changeToTwoDigi(number) {
+        // number = number.toString;
+
+        console.log("length = " + number.toString().length);
+
+        if (number < 10) {
+          return "0" + number.toString();
+        } else {
+          return number.toString();
+        }
+      }
+
+      var whichMonth = 0;
+
+      var day_choose;
+      var month_choose;
+      var year_choose;
+
+      function nextMonth() {
+        whichMonth++;
+        showDayInCalendar(whichMonth);
+      }
+      function lastMonth() {
+        whichMonth--;
+        showDayInCalendar(whichMonth);
+      }
+
+      showDayInCalendar(0);
+
+      function showDayInCalendar(whichMonth_) {
+        if (whichMonth_ < 0) {
+          whichMonth, (whichMonth_ = 0);
+        }
+        console.log("whichMonth_ = " + whichMonth_, whichMonth);
+
+        var today = new Date();
+
+        var month_raw = today.getMonth() + whichMonth_;
+        month = month_raw % 12; //จะทำให้เลขที่เกิน 12 วนกลับมานับ 0 ใหม่
+        month_choose = month + 1;
+        const monthNames = [
+          "January",
+          "February",
+          "March",
+          "April",
+          "May",
+          "June",
+          "July",
+          "August",
+          "September",
+          "October",
+          "November",
+          "December",
+        ];
+
+        year = today.getFullYear() + Math.floor(month_raw / 12);
+        year_choose = year;
+
+        document.getElementById("nameMonthOnCalenda").innerText =
+          monthNames[month] + " " + year;
+
+        var daysInMonth = new Date(year, month + 1, 0).getDate();
+        var firstDay = new Date(year, month, 1).getDay();
+        var dates = [];
+
+        var elementHtml = "";
+
+        // console.log("today = " + today.getDate());
+        // console.log("firstDay = " + firstDay);
+
+        for (var i = 1; i <= daysInMonth; i++) {
+          dates.push(i);
+        }
+
+        var sortedDates = dates.sort(function (a, b) {
+          return a - b;
+        });
+        // console.log('sortedDates = ' + sortedDates);
+
+        for (var i = 0; i < firstDay; i++) {
+          //   document.write("<td></td>");
+          elementHtml += "<td></td>";
+        }
+
+        for (var i = 0; i < sortedDates.length; i++) {
+          console.log("month_choose = " + month_choose);
+
+          elementHtml +=
+            '<td onclick="chooseDate(' +
+            sortedDates[i] +
+            "," +
+            month_choose +
+            "," +
+            year_choose +
+            ')">' +
+            sortedDates[i] +
+            "</td>";
+
+          if ((firstDay + i + 1) % 7 == 0) {
+            elementHtml += "</tr><tr>";
+          }
+        }
+
+        for (var i = 0; i < 7 - ((firstDay + daysInMonth) % 7); i++) {
+          elementHtml += "<td></td>";
+        }
+
+        // console.log("elementHtml = " + elementHtml);
+        document.getElementById("day_on_calenda").innerHTML = elementHtml;
+      }
+    </script>
+  </body>
+</html>

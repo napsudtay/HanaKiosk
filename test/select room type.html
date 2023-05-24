@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<title>Photo Gallery</title>
+	<style>
+		.photo {
+			display: inline-block;
+			margin: 10px;
+			width: 300px;
+			height: 300px;
+			background-size: cover;
+			cursor: pointer;
+		}
+
+		.btn {
+			display: inline-block;
+			margin: 10px;
+			padding: 5px 10px;
+			background-color: #ccc;
+			color: #000;
+			cursor: pointer;
+		}
+
+
+		/* Style the input box and buttons */
+		.input-group {
+			display: flex;
+			justify-content: center;
+			align-items: center;
+		}
+
+		#quantity {
+			width: 50px;
+			text-align: center;
+			margin: 0 10px;
+		}
+
+		.minus-btn,
+		.plus-btn {
+			width: 30px;
+			height: 30px;
+			padding: 0;
+			border: none;
+			background-color: #f2f2f2;
+			font-size: 20px;
+			cursor: pointer;
+		}
+
+		/* Style the plus button */
+		.plus-btn {
+			border-radius: 0 5px 5px 0;
+		}
+
+		.plus-btn:hover {
+			background-color: #d9d9d9;
+		}
+
+		/* Style the minus button */
+		.minus-btn {
+			border-radius: 5px 0 0 5px;
+		}
+
+		.minus-btn:hover {
+			background-color: #d9d9d9;
+		}
+	</style>
+</head>
+
+<body>
+	<table>
+		<tr>
+			<td id="gallery"></td>
+		</tr>
+		<tr>
+			<td id="roomName">Standard Room</td>
+		</tr>
+		<tr>
+			<td>ราคา</td>
+			<td id="roomPirce">500</td>
+		</tr>
+		<tr>
+			<td id="prevBtn" class="btn">ห้องที่แล้ว</td>
+			<td id="nextBtn" class="btn">ห้องถัดไป</td>
+		</tr>
+		<td>
+			<label for="quantity">จำนวนห้อง</label>
+			<div class="input-group">
+				<button class="minus-btn" type="button">-</button>
+				<input type="number" id="quantity" name="quantity" value="1" min="1" max="20" />
+				<button class="plus-btn" type="button">+</button>
+			</div>
+		</td>
+	</table>
+
+
+
+	<script>
+
+
+		const quantityInput = document.getElementById('quantity');
+		const minusButton = document.querySelector('.minus-btn');
+		const plusButton = document.querySelector('.plus-btn');
+
+		// Add event listeners to plus and minus buttons
+		plusButton.addEventListener('click', () => {
+			quantityInput.value = parseInt(quantityInput.value) + 1;
+		});
+
+		minusButton.addEventListener('click', () => {
+			if (parseInt(quantityInput.value) > 0) {
+				quantityInput.value = parseInt(quantityInput.value) - 1;
+			}
+		});
+
+
+
+	</script>
+
+
+
+
+
+	<script>
+		var photos = [
+			"photo1.jpg",
+			"photo2.jpg"
+		];
+
+		var nameRoom = [
+			"Standard Room",
+			"Room2"
+		];
+
+		var currentPhotoIndex = 0;
+
+		var gallery = document.getElementById("gallery");
+		var prevBtn = document.getElementById("prevBtn");
+		var nextBtn = document.getElementById("nextBtn");
+		var nameRoomHtml = document.getElementById("nameRoom");
+
+		function showCurrentPhoto() {
+			// Remove all photos from the gallery
+			while (gallery.firstChild) {
+				gallery.removeChild(gallery.firstChild);
+			}
+
+			// Create a new photo div for the current photo
+			var photoDiv = document.createElement("div");
+			photoDiv.className = "photo";
+			photoDiv.style.backgroundImage = "url('" + photos[currentPhotoIndex] + "')";
+			photoDiv.addEventListener("click", function () {
+				// Return the current photo URL when clicked
+				returnPhoto(photos[currentPhotoIndex]);
+			});
+			gallery.appendChild(photoDiv);
+			nameRoomHtml.innerHTML = nameRoom[currentPhotoIndex];
+		}
+
+		function showNextPhoto() {
+			currentPhotoIndex++;
+			if (currentPhotoIndex >= photos.length) {
+				currentPhotoIndex = 0;
+			}
+			showCurrentPhoto();
+		}
+
+		function showPrevPhoto() {
+			currentPhotoIndex--;
+			if (currentPhotoIndex < 0) {
+				currentPhotoIndex = photos.length - 1;
+			}
+			showCurrentPhoto();
+		}
+
+
+		// Show the first photo
+		showCurrentPhoto();
+
+		// Add event listeners for the buttons
+		prevBtn.addEventListener("click", showPrevPhoto);
+		nextBtn.addEventListener("click", showNextPhoto);
+
+	</script>
+</body>
+
+</html>

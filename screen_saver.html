@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Screen-Saver</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Kanit:wght@400;700&display=swap');
+
+        body,
+        html {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: black;
+        }
+
+        .full-page-image {
+            position: absolute;
+            top: 50%;
+            left: 0;
+            transform: translateY(-50%);
+            width: 100%;
+            object-fit: cover;
+            cursor: pointer;
+        }
+
+        .text {
+            text-align: center;
+            color: rgb(255, 255, 255);
+            font-size: 40px;
+            font-family: 'Kanit', Arial, sans-serif;
+            position: absolute;
+            top:5%;
+
+            background-color: rgb(0, 0, 0);
+            padding: 10px 20px;
+            border: solid rgb(255, 255, 255);
+        }
+
+        .unmute-button {
+            position: absolute;
+            bottom: 50px;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: rgb(255, 196, 0);
+            padding: 10px 20px;
+            cursor: pointer;
+            border: none;
+            border-radius: 4px;
+            color: black;
+            font-family: 'Kanit', Arial, sans-serif;
+            font-size: 16px;
+        }
+    </style>
+
+
+</head>
+
+<body>
+    <!-- <img src="texture/Hana-pic.jpg" alt="Full Page Image" class="full-page-image" id="btnPage"> -->
+    <video src="texture/video-screen-saver.mp4" class="full-page-image" id="btnPage" autoplay muted loop></video>
+
+    <button class="text" id="gotoHomeButton">คลิกเพื่อทำรายการ</button>
+    <button class="unmute-button" id="unmuteButton">เปิดเสียง</button>
+
+    <!-- กดที่ปุ่ม แล้วให้มันย้อนกลับไปหน้าเพจหลัก -->
+    <script>
+        document.getElementById('gotoHomeButton').addEventListener('click', function () {
+            // window.location.href = 'http://127.0.0.1:3001/?#';
+            window.history.back();
+        });
+    </script>
+
+
+    <!-- กดที่VDO แล้วให้มันย้อนกลับไปหน้าเพจหลัก -->
+    <script>
+        document.getElementById('btnPage').addEventListener('click', function () {
+            // window.location.href = 'http://127.0.0.1:3001/?#';
+            window.history.back();
+        });
+    </script>
+
+    <!-- กดที่หน้าจอ แล้วให้มันย้อนกลับไปหน้าเพจหลัก -->
+    <script>
+        // document.addEventListener('click', function () {
+        //     window.history.back();
+        // });
+    </script>
+
+
+    <script>
+        const video = document.getElementById('btnPage');
+        const unmuteButton = document.getElementById('unmuteButton');
+
+        unmuteButton.addEventListener('click', function () {
+            video.muted = false;
+            unmuteButton.style.display = 'none'; // Hide the unmute button once clicked
+        });
+
+        document.addEventListener('keydown', function(event) {
+            if (event.key === 'm') {
+                video.muted = false;
+                unmuteButton.style.display = 'none'; // Hide the unmute button once clicked
+            }
+        });
+    </script>
+
+
+</body>
+
+</html>

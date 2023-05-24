@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>QR Code Scanner</title>
+    <style>
+      #video {
+        width: 50%;
+        height: auto;
+        border: 1px solid gray;
+      }
+    </style>
+  </head>
+  <body>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css">
+    <!-- <link href="../style_qrcode_scaner.css" rel="stylesheet">?v=9999 -->
+
+    
+    
+    <!-- <section class="modal-windows" id="modal-windows">
+      <div class="modal-container">
+        <h2 class="modal-text-header"><ion-icon name="alert-circle-outline"></ion-icon><ion-icon name="bed-outline"></ion-icon></h2>
+        <p class="modal-text-content" id="modal-text-content">ให้แน่ใจว่าคุณได้จดจำหรือถ่ายรูปหมายเลขห้อง และรหัสการเข้าพักไว้เป็นที่เรียบร้อยแล้ว หากยังให้แตะที่ปุ่มกลับไปเพื่อดูรหัสอีกครั้ง</p>
+        <div class="modal-menu"> -->
+          <video id="video_area" class="video_area"></video>
+          <!-- <button type="submit" class="btn btn-gradient btn-warning-idcard" onclick="ClosePopupWarningRoomdetails();"><ion-icon name="arrow-back-outline"></ion-icon> กลับไปเพื่อดูรหัสอีกครั้ง</button> -->
+          <!-- <button type="submit" class="btn btn-gradient btn-warning-idcard" onclick="test();"><ion-icon name="home-outline"></ion-icon> กลับหน้าหลัก</button> -->
+        <!-- </div>
+      </div>
+    </section> -->
+    
+    <canvas id="canvas" style="display:none;"></canvas>
+    <button id="close-button" style="display:none;">Close Webcam</button>
+    <script src="https://cdn.jsdelivr.net/npm/jsqr/dist/jsQR.js"></script>
+    <script src="qr_scaner.js"></script>
+
+
+
+    <!-- <div w3-include-html="test.html"></div> -->
+    <!-- <script src="includeHTML.js"></script> -->
+
+  </body>
+</html>

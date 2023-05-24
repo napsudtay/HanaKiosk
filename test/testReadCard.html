@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Credit Card Reader</title>
+</head>
+<body>
+  <h1>Credit Card Reader</h1>
+  <button id="connect">Connect to Smart Card Reader</button>
+  <pre id="output"></pre>
+
+  <script>
+    const connectButton = document.getElementById('connect');
+    const output = document.getElementById('output');
+
+    connectButton.addEventListener('click', async () => {
+      try {
+        const port = await navigator.serial.requestPort();
+        await port.open({ baudRate: 9600 });
+
+        const reader = port.readable.getReader();
+        const decoder = new TextDecoder();
+
+        reader.read().then(function processResult({ done, value }) {
+          if (done) {
+            reader.releaseLock();
+            return;
+          }
+
+          output.textContent += decoder.decode(value);
+          reader.read().then(processResult);
+        });
+      } catch (error) {
+        console.error('Error connecting to smart card reader:', error);
+      }
+    });
+  </script>
+</body>
+</html>

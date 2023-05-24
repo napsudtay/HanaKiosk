@@ -1,0 +1,40 @@
+------------------------------ เวลาเปิดเครื่องแล้วให้รันโปรแกรมเอง --------------------------------------
+ไปที่โฟรเดอร์ BachFlie แล้วสร้าง Short Cut ของไฟล์ชื่อ runAll.bat
+จากนั้นกดปุ่ม Start + R แล้วพิมพ์  shell:startup
+นำ Short Cut ของไฟล์ชื่อ runAll.bat ไปใส่ไว้ในโฟรเดอร์นี้
+
+------------------------------ ปิด Notification --------------------------------------
+Start > setting ค้นหาคำว่า Notification 
+แล้วให้ ติ๊กปิดตรง Get notifications from apps and other sender
+
+------------------------------ ปิดการตั้งเวลา sleep เครื่อง --------------------------------------
+Control Panel\All Control Panel Items\Power Options
+
+-------------------------- ซ่อนไอคอนถังขยะ ---------------------------------------
+Start > setting > Personalization > Themes > Desktop icon settings
+
+----------------------------- ตั้งค่าไม่ให้เข้าเว็ปอื่นได้นอกจากของเว็ปเรา ---------------------------------------
+RUN  >  INETCPL.CPL 
+เพื่อตั้งค้างล้าง history on exit  (เวลาเปิดเครื่องมาแล้วเข้าเว็ป มันจะได้ไม่ต้องถามว่าจะให้คืนค่าเว็ปที่ถูกปิดไปอย่างกระทันหันไหม)
+
+> Connections  > LAN settings  > Proxy server
+ให้ติ๊กถูก แล้วใส่ Address: 127.0.0.1    Port:80
+
+> Advanced > Exceptions
+ให้ใส่ shiba-api.shibaroomth.com; cdn.skypack.dev; unpkg.com; cdnjs.cloudflare.com;https://fonts.googleapis.com
+
+----------------- ตั้งเวลาปิดเครื่องทุกวัน ------------------------
+ Start Menu พิมพ์คำว่า schedule
+ตรง script File ให้ใส่คำว่า
+C:\Windows\System32\shutdown.exe 
+
+
+--------------------------------------------------------------------------
+ปิดแท็บ ข้างๆ ของ Egde 
+Egde > setting > Sidebar
+ติ๊กปิดตรง Show side bar
+
+เปลี่ยนสีตรีม
+Egde > setting > Appearance
+เปลี่ยนสีตามที่ต้องการ
+แล้วเลื่อนลงมาด้านล่าง พวก showๆ ปิดมันให้หมด

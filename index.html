@@ -1,0 +1,1332 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <link
+      rel="stylesheet"
+      href="https://unpkg.com/spectre.css/dist/spectre.min.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://unpkg.com/spectre.css/dist/spectre-exp.min.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://unpkg.com/spectre.css/dist/spectre-icons.min.css"
+    />
+ 
+    <title>Reception SHIBA app2</title>
+    <!--Font awesome CDN-->
+   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css">
+   <link href="styleindex.css" rel="stylesheet"><!-- ?v=9999 -->
+   
+  </head>
+ 
+  <body>
+    <div class="menu" id="mainMenu" style="visibility: hidden;">
+      <div class="toggle" id="button5"><ion-icon name="paw-outline"></ion-icon><h2>คลิก</h2></div>
+          <li style="--i:3;">
+            <a href="#" id="button2" onclick="PopupCheckOut();"><ion-icon name="log-out-outline"></ion-icon><h2>เช็คเอาท์</h2></a>
+          </li>
+          <li style="--i:0;">
+            <a href="#" id="button4" onclick="PopupCheckIn();"><ion-icon name="bed-outline"></ion-icon><h2>เช็คอิน</h2></a>
+          </li>
+          <!-- <li style="--i:1;">
+            <a href="#" id="button6" onclick="PopupReservation();"><ion-icon name="calendar-outline"></ion-icon><h2>จองห้องพัก</h2></a>
+          </li> -->
+          <!-- <li style="--i:2;">
+            <a href="#" ><ion-icon name="mail-outline"></ion-icon><h2>บริการเสริม</h2></a>
+          </li>
+          <li style="--i:4;">
+            <a href="#"><ion-icon name="ellipsis-horizontal-outline"></ion-icon><h2>ข้อมูลอื่นๆ</h2></a>
+          </li>
+          <li style="--i:5;">
+            <a href="#" onclick="popupAction();"><ion-icon name="chatbubbles-outline"></ion-icon><h2>พูดคุย</h2></a>
+          </li> -->
+  </div>
+
+ <!-- <link rel="stylesheet" href="https://pyscript.net/latest/pyscript.css" />
+<script defer src="https://pyscript.net/latest/pyscript.js"></script>
+<py-script src="{% static 'python/test.py' %}"> </py-script> -->
+  <!-- py-click="test()" -->
+
+
+
+
+ 
+  <!-- style="display: none;" -->
+  <section class="modal-login" id="modal-login" > 
+    <div class="modal-container">
+        <button class="close-btn" id="close-login" onclick="ClosePopupCheckIn();">
+            <i><ion-icon name="close-outline"></ion-icon></i>
+        </button>
+        <div class="modal-content">
+          <form action="#" class="modal-form" id="formHomeFindBookingNumber">
+
+                <div>
+                    <label for="">กรุณาใส่หมายเลขการจอง ที่ทำการจองเข้ามา</label>
+                    <input type="text" class="form-input" id="bookingNumber" placeholder="Booking Number">
+                </div>
+                <div class="modal-menu">
+                  <button type="submit" class="btn btn-gradient btn-login" id="btnHomeFindBookingNumber" >ดำเนินการเช็คอินต่อ <ion-icon name="arrow-forward-outline"></ion-icon></button>
+                </div>
+
+                <div class="modal-other-login">
+                    <p>หากไม่พบข้อมูลกรุณาติดต่อที่ LINE ID : @shibaroom</p>
+                    <p id="show-date-time">วันที่และเวลาปัจจุบัน</p>
+                </div>
+                <!-- <div class="modal-footer"> -->
+                    <!-- <p id="show-date-time">วันที่และเวลาปัจจุบัน</p> -->
+                    <!-- <p>เมื่อระบุหมายเลขการจองแล้วจะถือว่าท่านยอมรับ<a href="#">ข้อกำหนดและเงื่อนไข</a>และ<a href="#">แถลงการณ์เกี่ยวกับความเป็นส่วนตัว</a>ของเรา</p> -->
+                    <!-- <p>สงวนลิขสิทธิ์.<br/>ลิขสิทธิ์ (2022 - 2023) - Shibaroom.com</p> -->
+                <!-- </div> -->
+                
+
+                  <div class="keypad">
+                    <button class="keypad-button" type="button">1</button>
+                    <button class="keypad-button" type="button">2</button>
+                    <button class="keypad-button" type="button">3</button>
+                    <button class="keypad-button" type="button">4</button>
+                    <button class="keypad-button" type="button">5</button>
+                    <button class="keypad-button" type="button">6</button>
+                    <button class="keypad-button" type="button">7</button>
+                    <button class="keypad-button" type="button">8</button>
+                    <button class="keypad-button" type="button">9</button>
+                    <button class="keypad-button" type="reset" style="background-color: rgb(255, 188, 188);">ลบ</button>
+                    <button class="keypad-button" type="button">0</button>
+                  </div>
+
+                <script>
+                  // Get the keypad buttons
+                  const buttons = document.querySelectorAll(".keypad-button");
+            
+                  // Get the keypad input element
+                  const keypadInput = document.getElementById("bookingNumber");
+          
+                  //Sound botton
+                  var audio_button_click= document.createElement("AUDIO");
+                  document.body.appendChild(audio_button_click);
+                  audio_button_click.src = "soundEffect/system/button_click.wav";
+                  
+                  // Add click event listeners to the buttons
+                  buttons.forEach((button) => {
+                    button.addEventListener("click", () => {
+                      const number = button.textContent;
+                      // console.log(number);
+                      keypadInput.value += number;
+                      audio_button_click.play();
+                    });
+                  });
+                </script>
+
+            </form>
+        </div>
+    </div>
+
+</section>
+
+
+
+
+<section class="modal-checkout" id="modal-checkout">
+  <div class="modal-container">
+    <button class="close-btn" id="close-login" onclick="ClosePopupCheckOut();">
+      <i><ion-icon name="close-outline"></ion-icon></i>
+  </button>
+  <div class="modal-content">
+      <form action="#" class="modal-form" id="formCheckOutFindBookingNumber">
+          <div>
+            <label for="">กรุณาใส่หมายเลขการจอง ที่ทำการจองเข้ามา</label>
+              <input type="text" class="form-input" id="bookingNumberCheckOut" placeholder="Booking Number">
+          </div>
+          <div class="modal-menu">
+            <button type="submit" class="btn btn-gradient btn-login" id="btnHomeFindBookingNumber" >ดำเนินการเช็คเอาท์ต่อ <ion-icon name="arrow-forward-outline"></ion-icon></button>
+          </div>
+
+          <div class="modal-other-login">
+              <p>หากไม่พบข้อมูลกรุณาติดต่อที่ LINE ID : @shibaroom</p>
+              <p id="show-date-time-checkout">วันที่และเวลาปัจจุบัน</p>
+          </div>
+
+
+          <div class="keypad">
+            <button class="keypad-button" type="button">1</button>
+            <button class="keypad-button" type="button">2</button>
+            <button class="keypad-button" type="button">3</button>
+            <button class="keypad-button" type="button">4</button>
+            <button class="keypad-button" type="button">5</button>
+            <button class="keypad-button" type="button">6</button>
+            <button class="keypad-button" type="button">7</button>
+            <button class="keypad-button" type="button">8</button>
+            <button class="keypad-button" type="button">9</button>
+            <button class="keypad-button" type="reset" style="background-color: rgb(255, 188, 188);">ลบ</button>
+            <button class="keypad-button" type="button">0</button>
+          </div>
+
+        <script>
+          // Get the keypad buttons
+          const buttonsCheckOut = document.querySelectorAll(".keypad-button");
+    
+          // Get the keypad input element
+          const keypadInputCheckOut = document.getElementById("bookingNumberCheckOut");
+          
+          //Sound botton
+          var audio_button_click= document.createElement("AUDIO");
+          document.body.appendChild(audio_button_click);
+          audio_button_click.src = "soundEffect/system/button_click.wav";
+
+          // Add click event listeners to the buttons
+          buttonsCheckOut.forEach((button) => {
+            button.addEventListener("click", () => {
+              const number = button.textContent;
+              // console.log(number);
+              keypadInputCheckOut.value += number;
+              audio_button_click.play();
+            });
+          });
+        </script>
+
+
+
+
+      </form>
+  </div>
+  </div>
+</section>
+
+
+
+
+
+
+<section class="modal-fillPhone" id="modal-fillPhone" >
+  <div class="modal-container" >
+      <!-- <button class="close-btn" id="close-phone" onclick="ClosePopupCheckIn();">
+          <i><ion-icon name="close-outline"></ion-icon></i>
+      </button> -->
+      <div class="modal-content">
+          <form action="#" class="modal-form" id="formFillPhoneNumber">
+              <div>
+                  <label for="">กรุณาใส่หมายเลขโทรศัพท์ของท่าน</label>
+                  <input type="text" class="form-input" id="phoneNumber" placeholder="ใส่เบอร์โทรศัพท์">
+              </div>
+              <div class="modal-menu">
+                <button type="submit" class="btn btn-gradient btn-login" id="btnFillPhoneNumber" >ดำเนินการต่อ <ion-icon name="arrow-forward-outline"></ion-icon></button>
+              </div>
+
+
+              <div class="keypad">
+                <button class="keypad-button" type="button">1</button>
+                <button class="keypad-button" type="button">2</button>
+                <button class="keypad-button" type="button">3</button>
+                <button class="keypad-button" type="button">4</button>
+                <button class="keypad-button" type="button">5</button>
+                <button class="keypad-button" type="button">6</button>
+                <button class="keypad-button" type="button">7</button>
+                <button class="keypad-button" type="button">8</button>
+                <button class="keypad-button" type="button">9</button>
+                <button class="keypad-button" type="reset" style="background-color: rgb(255, 188, 188);">ลบ</button>
+                <button class="keypad-button" type="button">0</button>
+              </div>
+
+            <script>
+              // Get the keypad buttons
+              const buttonsFillPhone = document.querySelectorAll(".keypad-button");
+        
+              // Get the keypad input element
+              const keypadInputFillPhone = document.getElementById("phoneNumber");
+        
+              //Sound botton
+              var audio_button_click= document.createElement("AUDIO");
+              document.body.appendChild(audio_button_click);
+              audio_button_click.src = "soundEffect/system/button_click.wav";
+              
+              // Add click event listeners to the buttons
+              buttonsFillPhone.forEach((button) => {
+                button.addEventListener("click", () => {
+                  const number = button.textContent;
+                  // console.log(number);
+                  keypadInputFillPhone.value += number;
+                  audio_button_click.play();
+                });
+              });
+            </script>
+
+
+          </form>
+      </div>
+  </div>
+</section>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<section class="modal-select-unite" id="modal-select-unite" >
+  <div class="modal-container" >
+
+    <button class="close-btn" id="close-phone" onclick="ClosePopupCheckIn();">
+          <i><ion-icon name="close-outline"></ion-icon></i>
+      </button>
+
+      <div class="modal-content">
+          <form action="#" class="modal-form" id="formSelectUnite">
+
+              <label for="">กรุณาเลือกประเภทห้อง และจำนวนห้อง</label>
+
+            
+                <div class="container-gallery">
+                  <button class="btn btn-gradient btn-next" type="button" onclick="showPrevPhoto()" id="prevBtn" ><</button>
+                  <label id="gallery"></label>
+                  <button class="btn btn-gradient btn-next" type="button" onclick="showNextPhoto()" id="nextBtn" >></button>
+                </div>
+                
+                <label id="nameRoom">Standard Room</label>
+                
+                <div class="container-gallery">
+                    <label >ราคาต่อห้อง</label>
+                    <label class="container-gallery-roomPrice" id="roomPirce">500</label>
+                    <label>บาท</label>  
+                </div>
+                
+                  <div class="container-gallery">
+                    <label for="quantity" >จำนวนห้อง</label>
+                    <button onclick="minus_quantity_input()" class="btn btn-gradient-gray btn-next" type="button">-</button>
+                    <input  type="text" class="input-quantityRoom" id="quantity_input" name="quantity" />
+                    <button onclick="plush_quantity_input()" class="btn btn-gradient-gray btn-next" type="button">+</button>
+                  </div>
+                  
+                  <div class="container-gallery">
+                    <label for="addBed" >จำนวนที่นอนเสริม</label>
+                    <button onclick="minus_addBed_input()" class="btn btn-gradient-gray btn-next" type="button">-</button>
+                    <input  type="text" class="input-quantityRoom" id="addBed_input" name="addBed" />
+                    <button onclick="plush_addBed_input()" class="btn btn-gradient-gray btn-next" type="button">+</button>
+                  </div>
+
+
+                  <!-- <div class="container-gallery">
+                    <input type="checkbox" id="canChangeDate" name="canChangeDate" value="canChangeDate">
+                    <label for="canChangeDate"> จองแบบเลื่อนวันได้</label><br>
+                  </div> -->
+
+
+              <div class="modal-menu-reservation">
+                <button type="button" onclick="CloseAllPopup()" class="btn-main-reservation btn-gradient-gray btn-reservation" id="btnCloseReservation" > <ion-icon name="arrow-back-outline"></ion-icon> กลับหน้าแรก </button>
+                <button type="button" onclick="btn_check_reservation_checkin_or_checkout()" class="btn-main-reservation btn-gradient btn-reservation" id="btnReservationCheckdata" >ยืนยันข้อมูล <ion-icon name="arrow-forward-outline"></ion-icon></button>
+              </div>
+
+
+          </form>
+      </div>
+  </div>
+</section>
+
+
+
+
+
+
+
+
+
+
+<section class="modal-reservation-calenda" id="modal-reservation-calenda">
+  <div class="modal-container">
+      <button class="close-btn" id="close-login" onclick="ClosePopupReservation();">
+          <i><ion-icon name="close-outline"></ion-icon></i>
+      </button>
+  
+      <div class="modal-content">
+          <form action="#" class="modal-form" id="formCheckOutFindBookingNumber">
+  
+  
+              <div class="modal-menu-reservation">
+                <label class="header-calenda"  id="header_calenda" style="color:#52BE80 ">เลือกวันเช็คอิน</label>
+                <label class="header-calenda" id="show_day_choose"> Show Calendar </label>
+              </div>
+  
+              <!-- ----------------- calenda -------------------- -->
+              <div class="calendar" id="calendar">
+      
+                  <table>
+                      <thead>
+                          <tr>
+                              <th onclick="lastMonth()"><</th>
+                              <th colspan="5" id="nameMonthOnCalenda">Choose Date</th>
+                              <th onclick="nextMonth()">></th>
+                          </tr>
+      
+                          <tr>
+                              <th>Sun</th>
+                              <th>Mon</th>
+                              <th>Tue</th>
+                              <th>Wed</th>
+                              <th>Thu</th>
+                              <th>Fri</th>
+                              <th>Sat</th>
+                          </tr>
+                          
+                      </thead>
+
+
+                      <tbody id="day_on_calenda"> </tbody>
+                          
+                  </table>
+              </div>
+  
+          
+              <div class="modal-menu-reservation">
+                  <button type="button" onclick="CloseAllPopup()" class="btn-main-reservation btn-gradient-gray btn-reservation" id="btnHomeFindBookingNumber" > <ion-icon name="arrow-back-outline"></ion-icon> กลับหน้าแรก </button>
+                  <button type="button" onclick="btn_check_reservation_checkin_or_checkout()" class="btn-main-reservation btn-gradient btn-reservation" id="btnReservationCheckOut" >ยืนยันข้อมูล <ion-icon name="arrow-forward-outline"></ion-icon></button>
+              </div>
+
+          </form>
+      </div>
+  </div>
+</section>
+
+
+
+
+
+
+
+<section class="modal-proof-reservation" id="modal-proof-reservation" >
+  <div class="modal-container" >
+
+    <button class="close-btn" id="close-phone" onclick="ClosePopupCheckIn();">
+          <i><ion-icon name="close-outline"></ion-icon></i>
+      </button>
+
+      <div class="modal-content">
+          <form action="#" class="modal-form" id="formProofReservation">
+
+              <label>รายละเอียด</label>
+              <label id="detail-reservation1"></label>
+              <label id="detail-reservation2"></label>
+              <label id="detail-reservation3"></label>
+              <label id="detail-reservation4"></label>
+              <label id="detail-reservation5"></label>
+
+
+
+              <div class="modal-menu-reservation">
+                <button type="button" onclick="CloseAllPopup()" class="btn-main-reservation btn-gradient-gray btn-reservation" id="btnCloseReservation" > <ion-icon name="arrow-back-outline"></ion-icon> กลับหน้าแรก </button>
+                <button type="button" onclick="btn_check_reservation_checkin_or_checkout()" class="btn-main-reservation btn-gradient btn-reservation" id="btnReservationCheckdata" >ยืนยันข้อมูล <ion-icon name="arrow-forward-outline"></ion-icon></button>
+              </div>
+
+
+          </form>
+      </div>
+  </div>
+</section>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<section class="modal-fillPhone-Reservation" id="modal-fillPhone-Reservation" >
+  <div class="modal-container" >
+      <button class="close-btn" id="close-phone" onclick="ClosePopupCheckIn();">
+          <i><ion-icon name="close-outline"></ion-icon></i>
+      </button>
+      <div class="modal-content">
+          <form action="#" class="modal-form" id="formFillPhoneNumberReservation">
+              <div>
+                  <label for="">กรุณาใส่หมายเลขโทรศัพท์ของท่าน</label>
+                  <input type="text" class="form-input" id="phoneBox" placeholder="YOUR Phone Number">
+              </div>
+              <div class="modal-menu">
+                <button type="submit" class="btn btn-gradient btn-login" id="btnFillPhoneReservation" >ดำเนินการต่อ <ion-icon name="arrow-forward-outline"></ion-icon></button>
+              </div>
+
+
+              <div class="keypad">
+                <button class="keypad-button" type="button" onclick="sendkeyPhoneReservation('1')">1</button>
+                <button class="keypad-button" type="button" onclick="sendkeyPhoneReservation('2')">2</button>
+                <button class="keypad-button" type="button" onclick="sendkeyPhoneReservation('3')">3</button>
+                <button class="keypad-button" type="button" onclick="sendkeyPhoneReservation('4')">4</button>
+                <button class="keypad-button" type="button" onclick="sendkeyPhoneReservation('5')">5</button>
+                <button class="keypad-button" type="button" onclick="sendkeyPhoneReservation('6')">6</button>
+                <button class="keypad-button" type="button" onclick="sendkeyPhoneReservation('7')">7</button>
+                <button class="keypad-button" type="button" onclick="sendkeyPhoneReservation('8')">8</button>
+                <button class="keypad-button" type="button" onclick="sendkeyPhoneReservation('9')">9</button>
+                <button class="keypad-button" type="button" onclick="sendkeyPhoneReservation('0')">0</button>
+                <button class="keypad-button" type="reset" style="background-color: rgb(255, 188, 188);">ลบ</button>
+
+              </div>
+
+            <script>
+              // Get the keypad input element
+              const keypadInputPhoneReservation = document.getElementById("phoneBox");
+
+              //Sound botton
+              var audio_button_click= document.createElement("AUDIO");
+              document.body.appendChild(audio_button_click);
+              audio_button_click.src = "soundEffect/system/button_click.wav";
+
+              function sendkeyPhoneReservation(key){
+                keypadInputPhoneReservation.value += key;
+                audio_button_click.play();
+              }
+            </script>
+
+
+          </form>
+      </div>
+  </div>
+
+</section>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<section class="modal-fillName-Reservation-Keyboard" id="modal-fillName-Reservation-Keyboard" >
+  <div class="modal-container-Reservation" >
+      <button class="close-btn" id="close-phone" onclick="CloseAllPopup();">
+          <i><ion-icon name="close-outline"></ion-icon></i>
+      </button>
+      <div class="modal-content">
+          <form action="#" class="modal-form" id="formFillName">
+              <div>
+                  <label for="">กรุณาใส่ชื่อของท่าน</label>
+                  <input type="text" class="form-input" id="nameBox" placeholder="YOUR NAME">
+              </div>
+              <div class="modal-menu">
+                <button type="submit" class="btn btn-gradient btn-login" id="btnFillName" >ดำเนินการต่อ <ion-icon name="arrow-forward-outline"></ion-icon></button>
+              </div>
+
+
+              <div class="keypad">
+                <button class="keypad-button" type="button" onclick="sendkey('A')">A</button>
+                <button class="keypad-button" type="button" onclick="sendkey('B')">B</button>
+                <button class="keypad-button" type="button" onclick="sendkey('C')">C</button>
+                <button class="keypad-button" type="button" onclick="sendkey('D')">D</button>
+                <button class="keypad-button" type="button" onclick="sendkey('E')">E</button>
+                <button class="keypad-button" type="button" onclick="sendkey('F')">F</button>
+                <button class="keypad-button" type="button" onclick="sendkey('G')">G</button>
+                <button class="keypad-button" type="button" onclick="sendkey('H')">H</button>
+                <button class="keypad-button" type="button" onclick="sendkey('I')">I</button>
+                <button class="keypad-button" type="button" onclick="sendkey('J')">J</button>
+                <button class="keypad-button" type="button" onclick="sendkey('K')">K</button>
+                <button class="keypad-button" type="button" onclick="sendkey('L')">L</button>
+                <button class="keypad-button" type="button" onclick="sendkey('M')">M</button>
+                <button class="keypad-button" type="button" onclick="sendkey('N')">N</button>
+                <button class="keypad-button" type="button" onclick="sendkey('O')">O</button>
+                <button class="keypad-button" type="button" onclick="sendkey('P')">P</button>
+                <button class="keypad-button" type="button" onclick="sendkey('Q')">Q</button>
+                <button class="keypad-button" type="button" onclick="sendkey('R')">R</button>
+                <button class="keypad-button" type="button" onclick="sendkey('S')">S</button>
+                <button class="keypad-button" type="button" onclick="sendkey('T')">T</button>
+                <button class="keypad-button" type="button" onclick="sendkey('U')">U</button>
+                <button class="keypad-button" type="button" onclick="sendkey('V')">V</button>
+                <button class="keypad-button" type="button" onclick="sendkey('W')">W</button>
+                <button class="keypad-button" type="button" onclick="sendkey('X')">X</button>
+                <button class="keypad-button" type="reset" style="background-color: rgb(255, 188, 188);">ลบ</button>
+                <button class="keypad-button" type="button" onclick="sendkey('Y')">Y</button>
+                <button class="keypad-button" type="button" onclick="sendkey('Z')">Z</button>
+                <button class="keypad-button" type="button" onclick="sendkey(' ')" style="background-color: rgb(211, 211, 211);">เว้น</button>
+
+              </div>
+
+            <script>
+              // Get the keypad input element
+              const keypadInputName = document.getElementById("nameBox");
+
+              //Sound botton
+              var audio_button_click= document.createElement("AUDIO");
+              document.body.appendChild(audio_button_click);
+              audio_button_click.src = "soundEffect/system/button_click.wav";
+
+              function sendkey(key){
+                keypadInputName.value += key;
+                audio_button_click.play();
+              }
+            </script>
+
+
+          </form>
+      </div>
+  </div>
+
+</section>
+
+
+
+
+
+
+
+
+
+<section class="modal-show-qrcode-pay" id="modal-show-qrcode-pay" >
+  <div class="modal-container" >
+
+      <button class="close-btn" id="close-phone" onclick="CloseAllPopup();">
+          <i><ion-icon name="close-outline"></ion-icon></i>
+      </button>
+
+      <div class="modal-content">
+
+          <form action="#" class="modal-form" id="form-show-qrcode-pay">
+
+              <div>
+                  <label for="">กรุณาสแกน เพื่อชำระเงิน</label>
+              </div>
+              
+              <img src="test/qr-shiba.jpg" alt="Image Description">
+              
+              <!-- <div class="modal-menu-reservation"> -->
+                <div style="flex-direction: row; height: 7rem; margin-bottom: 10rem; ">
+                  <button type="submit" class="btn btn-gradient btn-login" id="btn-show-qrcode-pay" >ดำเนินการต่อ <ion-icon name="arrow-forward-outline"></ion-icon></button>
+                  <button type="button" onclick="CloseAllPopup()" class="btn-main-reservation btn-gradient-gray btn-reservation" id="btnCloseReservation" > <ion-icon name="arrow-back-outline"></ion-icon> กลับหน้าแรก </button>
+                </div>
+              <!-- </div> -->
+
+          </form>
+
+      </div>
+
+  </div>
+
+</section>
+
+
+
+<section class="modal-reservation-successful" id="modal-reservation-successful">
+  <div class="modal-container">
+    <button class="close-btn" id="close-login" onclick="CloseAllPopup();">
+      <ion-icon name="close-outline"></ion-icon>
+    </button>
+      <h2 class="modal-reservation-successful-header"><ion-icon name="shield-checkmark-outline"></ion-icon> </br> <p id="reservation-successful-content">การจองสำเร็จ</p> </h2>
+      <div class="modal-reservation-successful-content" id="modal-reservation-successful-content">
+        <p class="modal-reservation-successful-sendroomnumber" >📑 หมายเลขการจองของคุณคือ</p>
+        <p class="modal-reservation-successful-sendroomnumber" id="modal-reservation-successful-sendroomnumber" style="font-size: 4rem">TextRoomnumber</p>
+        <p class="modal-reservation-successful-sendroomnumber" >โปรดเก็บรักษาหมายเลขการจองของคุณไว้</p>
+      </div>
+ 
+      <div class="modal-menu-reservation-successful">
+        <button type="button" class="btn btn-gradient btn-reservation-successful" onclick="btn_check_reservation_checkin_or_checkout();"><p class="togglesymbol-reservation-successful" id="togglesymbol-reservation-successful"><ion-icon name="caret-down-outline"></ion-icon></p> กดเพื่อดูหมายเลขการจอง</button>
+        <button type="button" class="btn btn-reservation-home" onclick="CloseAllPopup();"><ion-icon name="home-outline"></ion-icon> กลับไปยังหน้าหลัก</button>
+      </div>
+  </div>
+</section>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+ 
+<section class="modal-confirmbooking" id="modal-confirmbooking">
+  <div class="modal-container">
+      <h2 class="modal-confirmbooking-header"><ion-icon name="bed-outline"></ion-icon> </h2>
+      <p class="modal-confirmbooking-content" id="modal-confirmbooking-content">Text-Confirmbooking-Content</p>
+      <div class="modal-menu-confirmbooking">
+        <button type="submit" class="btn btn-confirmbooking" onclick="ClosePopupConfirmBooking();"><ion-icon name="arrow-back-outline"></ion-icon> ย้อนกลับ</button>
+        <button type="submit" class="btn btn-gradient btn-confirmbooking" onclick="PopupScanCard();"  ><ion-icon name="checkmark-outline"></ion-icon> ยืนยันข้อมูล</button>
+      </div>
+  </div>
+</section>
+ 
+<section class="modal-scancard" id="modal-scancard">
+  <div class="modal-container" >
+      <p class="modal-scancard-title" id="modal-scancard-title">ScancardTitle</p>
+      <div class="modal-scancard-header-container">
+        <h2 class="modal-scancard-header-waitingcard" id="modal-scancard-header-waitingcard"><ion-icon name="id-card-outline"></ion-icon> </h2>
+        <h2 class="modal-scancard-header-computing" id="modal-scancard-header-computing"><ion-icon name="sync-outline"></ion-icon> </h2>
+      </div>
+      <div class="modal-scancard-countdown" id="modal-scancard-countdown">
+        <ul>
+            <!-- <li><span></span>วัน</li>
+            <li><span></span>ชั่วโมง</li> -->
+            <li>ระยะเวลาในการทำรายการ</li>
+            <!-- <li><span></span>นาที</li> -->
+            <li><span></span></li>
+            <li>วินาที</li>
+        </ul>
+    </div>
+      <p class="modal-scancard-content" id="modal-scancard-content">กรุณาเสียบบัตรประชาชนเพื่อทำการเช็คอิน เมื่อทำการเสียบบัตรประชาชนเรียบร้อยระบบจะดำเนินการขั้นตอนการยืนยันใบหน้าโดยอัตโนมัติ</p>
+      <div class="modal-menu-scancard">
+        <!-- <button type="submit" class="btn btn-scancard" onclick="ClosePopupScanCard();"><ion-icon name="close-circle-outline"></ion-icon>  ยกเลิกการยืนยันตัวตน</button> -->
+      </div>
+  </div>
+</section>
+ 
+<section class="modal-scanface" id="modal-scanface">
+  <div class="take-photo" id="take-photo"> <span class="take-photo-countdown" id="take-photo-countdown"></span></div>
+  <div class="modal-container">
+      <h1 class="modal-scanface-header"id="photoFrame" style="z-index: 9999;"><ion-icon name="scan-outline"></ion-icon></h1>
+      <video class="model-container-webcam" id="webcam-vid" autoplay="true" style="transform: scaleX(-1)"></video>
+      <div id="screenshots"></div>
+      <p class="modal-scanface-content" id="modal-scanface-content">กรุณาจัดใบหน้าให้ตรงภายในกรอบ หากเรียบร้อยแล้วรอนับถอยหลังเพื่อถ่ายรูป</p>
+ 
+      <!-- เปิดปิดปุ่มทดลองถ่ายภาพ -->
+      <!-- <button id="startWebcamBTN" class="btn btn-gradient" onclick="">Open web cam</button> -->
+ 
+      <div class="modal-menu-scanface">
+        <!-- <button type="submit" class="btn btn-scanface" onclick="ClosePopupScanFace();"><ion-icon name="arrow-back-outline"></ion-icon> ย้อนกลับ</button> -->
+        <!-- <button type="submit" class="btn btn-gradient btn-scanface" onclick="BTNTakePhoto();"><ion-icon name="camera-outline"></ion-icon> ยืนยันใบหน้า</button> -->
+      </div>
+  </div>
+</section>
+ 
+<section class="modal-warningwindows" id="modal-warningwindows">
+  <div class="modal-container">
+      <h2 class="modal-warningwindows-header"><ion-icon name="alert-circle-outline"></ion-icon></h2>
+      <p class="modal-warningwindows-content" id="modal-warningwindows-content">Text-Content</p>
+      <div class="modal-menu">
+        <button type="submit" class="btn btn-warningwindows" onclick="ClosePopupWarningWindows();"><ion-icon name="arrow-back-outline"></ion-icon> ย้อนกลับ</button>
+      </div>
+  </div>
+</section>
+ 
+<section class="modal-scanface-processing" id="modal-scanface-processing">
+  <div class="modal-container">
+    <h2 class="modal-processing-header"><ion-icon name="sync-outline"></ion-icon> </h2>
+      <p class="modal-processing-content" id="modal-processing-content">กำลังประมวลผลเปรียบเทียบใบหน้า </br> ใช้เวลาประมาณ 20 วินาที</p>
+ 
+  </div>
+</section>
+ 
+<section class="modal-warningwindows-scanface" id="modal-warningwindows-scanface">
+  <div class="modal-container">
+      <h2 class="modal-warningwindows-scanface-header"><ion-icon name="alert-circle-outline"></ion-icon></h2>
+      <p class="modal-warningwindows-scanface-content" id="modal-warningwindows-scanface-content">Text-Content</p>
+      <div class="modal-menu-warningwindows-scanface">
+        <button type="submit" class="btn btn-warningwindows-scanface" onclick="ClosePopupWindows();"><ion-icon name="close-outline"></ion-icon> ยกเลิก</button>
+        <button type="submit" class="btn btn-gradient btn-warningwindows-scanface" onclick="PopupTakePhoto();"><ion-icon name="camera-outline"></ion-icon> ถ่ายรูปอีกครั้ง</button>
+      </div>
+  </div>
+</section>
+ 
+<section class="modal-scanface-successful" id="modal-scanface-successfu">
+  <div class="modal-container">
+    <button class="close-btn" id="close-login" onclick="ClosePopupScanfaceSuccessful();">
+      <ion-icon name="close-outline"></ion-icon>
+    </button>
+      <h2 class="modal-scanface-successful-header"><ion-icon name="shield-checkmark-outline"></ion-icon> </br> <p id="scanface-successful-content">Text-scanface-successful-content</p> </h2>
+      <div class="modal-scanface-successful-content" id="modal-scanface-successful-content">
+        <p class="modal-scanface-successful-sendroomnumber" id="modal-scanface-successful-sendroomnumber">TextRoomnumber</p>
+      </div>
+ 
+      <div class="modal-menu-scanface-successful">
+        <button type="submit" class="btn btn-gradient btn-scanface-successful" onclick="SuccessfulToggleBTN();"><p class="togglesymbol-scanface-successful" id="togglesymbol-scanface-successful"><ion-icon name="caret-down-outline"></ion-icon></p> กดเพื่อดูรหัสการเข้าที่พัก</button>
+        <button type="submit" class="btn btn-scanface-home" onclick="ClosePopupScanfaceSuccessful();"><ion-icon name="home-outline"></ion-icon> กลับไปยังหน้าหลัก</button>
+      </div>
+  </div>
+</section>
+ 
+<section class="modal-warning-idcard" id="modal-warning-idcard">
+  <div class="modal-container">
+      <h2 class="modal-warning-idcard-header"><ion-icon name="id-card-outline"></ion-icon><ion-icon name="arrow-redo-outline"></ion-icon></h2>
+      <p class="modal-warning-idcard-content" id="modal-warning-idcard-content">กรุณาดึงบัตรประชาชนออกจากเครื่องก่อนแตะปุ่มดำเนินการต่อ</p>
+      <div class="modal-menu">
+        <button type="submit" class="btn btn-gradient btn-warning-idcard" onclick="ClosePopupWarningIDcard();"><ion-icon name="checkmark-circle-outline"></ion-icon> ดำเนินการต่อ</button>
+      </div>
+  </div>
+</section>
+ 
+<section class="modal-warning-roomdetails" id="modal-warning-roomdetails">
+  <div class="modal-container">
+      <h2 class="modal-warning-idcard-header"><ion-icon name="alert-circle-outline"></ion-icon><ion-icon name="bed-outline"></ion-icon></h2>
+      <p class="modal-warning-idcard-content" id="modal-warning-idcard-content">ให้แน่ใจว่าคุณได้จดจำหรือถ่ายรูปหมายเลขห้อง และรหัสการเข้าพักไว้เป็นที่เรียบร้อยแล้ว หากยังให้แตะที่ปุ่มกลับไปเพื่อดูรหัสอีกครั้ง</p>
+      <div class="modal-menu">
+        <button type="submit" class="btn btn-gradient btn-warning-idcard" onclick="ClosePopupWarningRoomdetails();"><ion-icon name="arrow-back-outline"></ion-icon> กลับไปเพื่อดูรหัสอีกครั้ง</button>
+        <button type="submit" class="btn btn-gradient btn-warning-idcard" onclick="CloseAllPopup();"><ion-icon name="home-outline"></ion-icon> กลับหน้าหลัก</button>
+      </div>
+  </div>
+</section>
+ 
+
+
+
+ 
+
+
+
+<section class="modal-checkout-success" id="modal-checkout-success">
+  <div class="modal-container">
+      <h2 class="modal-checkout-success-header"><ion-icon name="checkmark-circle-outline"></ion-icon></h2>
+      <p class="modal-checkout-success-content" id="modal-checkout-success-content">ห้อง 3/1 , ห้อง 1/4 </br> ทำการเช็คเอาท์สำเร็จแล้ว</p>
+      <div class="modal-menu">
+        <button type="submit" class="btn btn-gradient btn-checkout-success" onclick="ClosePopupCheckoutSuccess();"><ion-icon name="home-outline"></ion-icon> กลับไปยังหน้าหลัก (<span id="numCoundCheckOut"></span>)</button>
+      </div>
+  </div>
+</section>
+ 
+<section class="content-loading" id="content-loading">
+  <div class="modal-container">
+      <h2 class="content-loading-header"><ion-icon name="sync-outline"></ion-icon></h2>
+      <p class="content-loading-content">กำลังตรวจสอบข้อมูล </br> อาจจะใช้เวลาซักครู่</p>
+  </div>
+</section>
+ 
+<section class="check-timeout" id="check-timeout">
+  <div class="check-timeout-container">
+    <h2 class="check-timeout-header"><ion-icon name="time-outline"></ion-icon></h2>
+    <p class="check-timeout-content" id="check-timeout-content">นับถอยหลังเวลา</p>
+</div>
+</section>
+ 
+ 
+ 
+  <div class="btnAction" id="btnAction">
+    <button id="button1" class="btn" onclick=""><ion-icon name="accessibility-outline"></ion-icon>idle</button>
+    <button id="button2" class="btn" onclick=""><ion-icon name="accessibility-outline"></ion-icon>Bye</button>
+    <button id="button3" class="btn" onclick=""><ion-icon name="accessibility-outline"></ion-icon>Angry</button>
+    <button id="button4" class="btn" onclick=""><ion-icon name="accessibility-outline"></ion-icon>Thank</button>
+    <button id="button6" class="btn" onclick=""><ion-icon name="accessibility-outline"></ion-icon>LookBack</button>
+    <button id="button7" class="btn" onclick=""><ion-icon name="accessibility-outline"></ion-icon>Dance</button>
+  </div>
+ 
+<script src="scriptindex.js"></script><!-- ?v=9999 -->
+<script src="apiShibaPortal.js"></script>
+<script src="apiShibaGoogleSC.js"></script>
+<script src="checkDateAndTime.js"></script>
+<script src="reservation.js"></script>
+<script src="mouseEvent.js"></script>
+<script src="getParameterURL.js"></script>
+<script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+<script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+ 
+    <script type="module">
+      import * as THREE from "https://cdn.skypack.dev/three@0.136.0/build/three.module.js";
+      import { OrbitControls } from "https://cdn.skypack.dev/three@0.136.0/examples/jsm/controls/OrbitControls.js";
+      import { GUI } from "https://cdn.skypack.dev/three@0.136.0/examples/jsm/libs/lil-gui.module.min.js";
+      import { FBXLoader } from "https://cdn.skypack.dev/three@0.136.0/examples/jsm/loaders/FBXLoader.js";
+ 
+      // SCENE
+      const scene = new THREE.Scene();
+      // scene.add(new THREE.AxesHelper(20));
+      scene.background = new THREE.Color(0x000000);
+      // const loaderBG = new THREE.TextureLoader();
+      // scene.background = loaderBG.load("{% static 'texture/receptionBG.jpg' %}");
+ 
+      // CAMERA
+      const camera = new THREE.PerspectiveCamera(
+        75,
+        window.innerWidth / window.innerHeight,
+        0.1,
+        1000
+      );
+      camera.position.set(0, 1.5, 0.8);
+      camera.lookAt(0, 1.5, 0);
+ 
+      // RENDERER
+      const renderer = new THREE.WebGLRenderer({ antialias: true });
+      renderer.setSize(window.innerWidth, window.innerHeight);
+      document.body.appendChild(renderer.domElement);
+      renderer.render(scene, camera);
+ 
+      // const controls = new OrbitControls(camera, renderer.domElement); //ทำให้เมาส์คุมกล้องได้
+ 
+      // ทำให้ Responsive กับหน้าต่างที่ขยายเข้าออกได้
+      function onWindowsResize() {
+        camera.aspect = window.innerWidth / window.innerHeight;
+        camera.updateProjectionMatrix();
+        renderer.setSize(window.innerWidth, window.innerHeight);
+      }
+ 
+      window.addEventListener("resize", onWindowsResize, false);
+ 
+      ///////////////////////^^^^^^^ setting ^^^^^^^^^///////////////////////////////
+ 
+      // add AmbientLight
+      var light = new THREE.AmbientLight(0xffffff);
+      light.intensity = 1.25;
+      scene.add(light);
+ 
+      //Floor
+      let textureFloor1 = new THREE.TextureLoader().load(
+        "texture/receptionBG2BR-logo.jpg"
+      );
+      textureFloor1.wrapS = textureFloor1.wrapT = THREE.ReapeatWrapping;
+      var meshFloor1 = new THREE.Mesh(
+        new THREE.PlaneGeometry(20, 13, 512, 512),
+        new THREE.MeshStandardMaterial({
+          map: textureFloor1,
+          side: THREE.DoubleSide,
+        })
+      );
+      meshFloor1.position.set(0, 2, -7);
+      scene.add(meshFloor1);
+ 
+      // MESH Box
+      var mesh = new THREE.Mesh(
+        new THREE.BoxGeometry(1, 1, 1),
+        new THREE.MeshStandardMaterial({
+          color: 0xff0000,
+        })
+      );
+      // scene.add(mesh);
+      mesh.position.set(0, 2, -5);
+ 
+      // function Audio_OpeningSound() {
+      //   var x = document.createElement("AUDIO");
+      //   x.setAttribute(
+      //     "src",
+      //     "{% static 'soundEffect/OmaeWaMou.mp3' %}"
+      //   );
+      //   x.setAttribute("autoplay", "");
+      //   document.body.appendChild(x);
+      //   x.volume = 0.1;
+      //   x.loop = true;
+      //   x.load();
+      //   console.log(">>>>>>>>>>");
+      // }
+      // Audio_OpeningSound();
+      
+ 
+      // function Audio_OpeningEffect() {
+      //   var y = document.createElement("AUDIO");
+      //   y.setAttribute(
+      //     "src",
+      //     "{% static 'soundEffect/OpeningEffect.mp3' %}"
+      //   );
+      //   y.setAttribute("autoplay", "");
+      //   document.body.appendChild(y);
+      // }
+ 
+      // function Audio_GirlSaysHello() {
+      //   var y = document.createElement("AUDIO");
+      //   y.setAttribute(
+      //     "src",
+      //     "{% static 'soundEffect/StartUpGirlSaysHelloMoshi.mp3' %}"
+      //   );
+      //   y.setAttribute("autoplay", "");
+      //   document.body.appendChild(y);
+      // }
+ 
+      var audio_Hello = document.createElement("AUDIO");
+      document.body.appendChild(audio_Hello);
+      audio_Hello.src = "soundEffect/GirlSaysHello.mp3";
+ 
+      var audio_Bye = document.createElement("AUDIO");
+      document.body.appendChild(audio_Bye);
+      audio_Bye.src = "soundEffect/Hana_Check_out.mp3";
+ 
+      var audio_NoOK = document.createElement("AUDIO");
+      document.body.appendChild(audio_NoOK);
+      audio_NoOK.src = "soundEffect/NoOK.mp3";
+ 
+      var audio_Hana_Check_in = document.createElement("AUDIO");
+      document.body.appendChild(audio_Hana_Check_in);
+      audio_Hana_Check_in.src = "soundEffect/Hana_Check_in.mp3";
+ 
+      var audio_click = document.createElement("AUDIO");
+      document.body.appendChild(audio_click);
+      audio_click.src = "soundEffect/click.mp3";
+ 
+      var audio_LookBack = document.createElement("AUDIO");
+      document.body.appendChild(audio_LookBack);
+      audio_LookBack.src = "soundEffect/LookBack.mp3";
+ 
+      var audio_Dance = document.createElement("AUDIO");
+      document.body.appendChild(audio_Dance);
+      audio_Dance.src = "soundEffect/DanceThaiSong.mp3";
+ 
+      
+
+
+
+   
+
+
+
+
+
+
+
+
+
+      function stopAllAudio() {
+        audio_Hello.pause();
+        audio_Bye.pause();
+        audio_NoOK.pause();
+        audio_Hana_Check_in.pause();
+        audio_click.pause();
+        audio_LookBack.pause();
+        audio_Dance.pause();
+      }
+ 
+      ////////// vvvvvv  ฟังค์ชั่นที่เอาไว้ให้ปุ่ม HTML เรียกท่า  vvvvvvvv /////////////
+ 
+      let myFunction1 = (event) => {
+        animations.Idle();
+        stopAllAudio();
+      };
+      document.getElementById("button1").addEventListener("click", myFunction1);
+ 
+      let myFunction2 = (event) => {
+        animations.StandingGreeting();
+        stopAllAudio();
+        audio_Bye.load();
+        audio_Bye.play();
+      };
+      document.getElementById("button2").addEventListener("click", myFunction2);
+ 
+      let myFunction3 = (event) => {
+        animations.Angry();
+        stopAllAudio();
+        audio_NoOK.load();
+        audio_NoOK.play();
+      };
+      document.getElementById("button3").addEventListener("click", myFunction3);
+ 
+      let myFunction4 = (event) => {
+        animations.Thankful();
+        stopAllAudio();
+        audio_Hana_Check_in.load();
+        audio_Hana_Check_in.play();
+      };
+      document.getElementById("button4").addEventListener("click", myFunction4);
+ 
+      let myFunction5 = (event) => {
+        animations.Click();
+        stopAllAudio();
+        audio_click.load();
+        audio_click.play();
+        
+      };
+      document.getElementById("button5").addEventListener("click", myFunction5);
+ 
+      let myFunction6 = (event) => {
+        animations.LookingBehind();
+        stopAllAudio();
+        audio_LookBack.load();
+        audio_LookBack.play();
+      };
+      document.getElementById("button6").addEventListener("click", myFunction6);
+ 
+      let myFunction7 = (event) => {
+        animations.Breakdance();
+        stopAllAudio();
+        audio_Dance.load();
+        audio_Dance.play();
+      };
+      document.getElementById("button7").addEventListener("click", myFunction7);
+ 
+      ////////// ^^^^^^  ฟังค์ชั่นที่เอาไว้ให้ปุ่ม HTML เรียกท่า  ^^^^^^ /////////////
+ 
+      const animations = {
+        StandingGreeting: function () {
+          setAction(animationActions[0]);
+        },
+        Idle: function () {
+          setAction(animationActions[1]);
+          // setTimeout(stay_idle, 5000); //กลับไปยืน idle
+        },
+        Angry: function () {
+          setAction(animationActions[2]);
+          // setTimeout(stay_idle, 5000); //กลับไปยืน idle
+        },
+        Thankful: function () {
+          setAction(animationActions[3]);
+          // setTimeout(stay_idle, 2500); //กลับไปยืน idle
+        },
+        Click: function () {
+          setAction(animationActions[4]);
+          // setTimeout(stay_idle, 2000); //กลับไปยืน idle
+        },
+        LookingBehind: function () {
+          setAction(animationActions[5]);
+          // setTimeout(stay_idle, 2000); //กลับไปยืน idle
+        },
+        Breakdance: function () {
+          setAction(animationActions[6]);
+        },
+      };
+ 
+      const setAction = (toAction) => {
+        if (toAction != activeAction) {
+          lastAction = activeAction;
+          activeAction = toAction;
+          activeAction.reset();
+          lastAction.crossFadeTo(activeAction, 1);
+ 
+          if (activeAction != animationActions[1]) {
+            activeAction.clampWhenFinished = true;
+            activeAction.loop = THREE.LoopOnce;
+          }
+ 
+          activeAction.play();
+ 
+          mixer.addEventListener("finished", () => {
+            animations.Idle();
+          });
+        }
+      };
+ 
+      let mixer;
+      let modelReady = false;
+      const animationActions = [];
+      let activeAction;
+      let lastAction;
+      const clock = new THREE.Clock();
+      const fbxLoader = new FBXLoader();
+      fbxLoader.load(
+        "models/Hana/StandingGreetingSK.fbx",
+        (object) => {
+          mixer = new THREE.AnimationMixer(object);
+          const animationAction = mixer.clipAction(object.animations[0]);
+          animationActions.push(animationAction);
+          // animationsFolder.add(animations, "default");//เพิ่มท่าเข้าไปในปุ่ม
+          activeAction = animationActions[0];
+ 
+          object.scale.set(0.012, 0.012, 0.012);
+          object.position.set(0, 0, 0);
+ 
+          fbxLoader.load(
+            "models/Hana/Idle.fbx",
+            (object) => {
+              const animationAction = mixer.clipAction(object.animations[0]);
+              animationActions.push(animationAction);
+              // animationsFolder.add(animations, "StandingGreeting"); //เพิ่มท่าเข้าไปในปุ่ม
+ 
+              fbxLoader.load(
+                "models/Hana/Angry.fbx",
+                (object) => {
+                  const animationAction = mixer.clipAction(
+                    object.animations[0]
+                  );
+                  animationActions.push(animationAction);
+                  // animationsFolder.add(animations, "Angry"); //เพิ่มท่าเข้าไปในปุ่ม
+ 
+                  fbxLoader.load(
+                    "models/Hana/Thankful.fbx",
+                    (object) => {
+                      const animationAction = mixer.clipAction(
+                        object.animations[0]
+                      );
+                      animationActions.push(animationAction);
+                      // animationsFolder.add(animations, "Thankful"); //เพิ่มท่าเข้าไปในปุ่ม
+ 
+                      fbxLoader.load(
+                        "models/Hana/ButtonPushing.fbx",
+                        (object) => {
+                          const animationAction = mixer.clipAction(
+                            object.animations[0]
+                          );
+                          animationActions.push(animationAction);
+                          // animationsFolder.add(animations, "Click"); //เพิ่มท่าเข้าไปในปุ่ม
+ 
+                          fbxLoader.load(
+                            "models/Hana/LookingBehind.fbx",
+                            (object) => {
+                              const animationAction = mixer.clipAction(
+                                object.animations[0]
+                              );
+                              animationActions.push(animationAction);
+                              // animationsFolder.add(animations, "LookingBehind"); //เพิ่มท่าเข้าไปในปุ่ม
+ 
+                              fbxLoader.load(
+                                "models/Hana/DancingSK.fbx",
+                                (object) => {
+                                  const animationAction = mixer.clipAction(
+                                    object.animations[0]
+                                  );
+                                  animationActions.push(animationAction);
+                                  // animationsFolder.add(animations, "Breakdance"); //เพิ่มท่าเข้าไปในปุ่ม
+                                }
+                              );
+                            }
+                          );
+                        }
+                      );
+                    }
+                  );
+                }
+              );
+            }
+          );
+ 
+          modelReady = true;
+          // setTimeout(stay_StandingGreeting, 200);
+          // Audio_OpeningEffect();
+          // Audio_GirlSaysHello();
+          // Audio_OpeningSound();
+ 
+          setTimeout(init, 1000);
+          function init() {
+            animationActions[0].clampWhenFinished = true;
+            animationActions[0].loop = THREE.LoopOnce;
+            scene.add(object);
+            animationActions[0].play();
+          }
+ 
+          setTimeout(init2, 5000);
+          function init2() {
+            animations.Idle();
+          }
+        }
+      );
+ 
+      function animate() {
+        requestAnimationFrame(animate);
+        if (modelReady) mixer.update(clock.getDelta());
+        renderer.render(scene, camera);
+      }
+      animate();
+
+
+
+ 
+      // function soundeffect(){
+      //   var soundeffect_click = document.createElement("AUDIO");
+      //   soundeffect_click.src = "{% static 'soundEffect/click.mp3' %}";
+      //   document.getElementById("button2").addEventListener("click", function(music){
+      //     soundeffect_click.play();
+      //   },false);
+      //   document.getElementById("button4").addEventListener("click", function(music){
+      //     soundeffect_click.play();
+      //   },false);
+      //   document.getElementById("btnHomeFindBookingNumber").addEventListener("click", function(music){
+      //     soundeffect_click.play();
+      //   },false);
+      //   document.getElementById("close-login").addEventListener("click", function(music){
+      //     soundeffect_click.play();
+      //   },false);
+      //   document.querySelector(".btn.btn-warningwindows").addEventListener("click", function(music){
+      //     soundeffect_click.play();
+      //   },false);
+      //   document.querySelector(".btn.btn-confirmbooking").addEventListener("click", function(music){
+      //     soundeffect_click.play();
+      //   },false);
+      //   document.querySelector(".btn.btn-gradient.btn-confirmbooking").addEventListener("click", function(music){
+      //     soundeffect_click.play();
+      //   },false);
+      //   document.querySelector(".btn.btn-scancard").addEventListener("click", function(music){
+      //     soundeffect_click.play();
+      //   },false);
+      //   document.querySelector(".btn.btn-scanface").addEventListener("click", function(music){
+      //     soundeffect_click.play();
+      //   },false);
+      //   document.querySelector(".btn.btn-warningwindows-scanface").addEventListener("click", function(music){
+      //     soundeffect_click.play();
+      //   },false);
+      //   document.querySelector(".btn.btn-gradient.btn-warningwindows-scanface").addEventListener("click", function(music){
+      //     soundeffect_click.play();
+      //   },false);
+      //   document.querySelector(".close-btn").addEventListener("click", function(music){
+      //     soundeffect_click.play();
+      //   },false);
+      //   document.querySelector(".btn.btn-gradient.btn-scanface-successful").addEventListener("click", function(music){
+      //     soundeffect_click.play();
+      //   },false);
+      //   document.querySelector(".btn.btn-scanface-home").addEventListener("click", function(music){
+      //     soundeffect_click.play();
+      //   },false);
+      //   document.querySelector(".btn.btn-gradient.btn-warning-idcard").addEventListener("click", function(music){
+      //     soundeffect_click.play();
+      //   },false);
+      //   document.querySelector(".btn.btn-gradient.btn-checkout-success").addEventListener("click", function(music){
+      //     soundeffect_click.play();
+      //   },false);
+       
+      // }
+      // soundeffect();
+     
+    </script>
+ 
+    <!-- โค้ดห้ามคลิกขวา -->
+    <script language=JavaScript>
+      function clickIE() {if (document.all) {alert(message);return false;}}
+      function clickNS(e) {if
+      (document.layers||(document.getElementById&&!document.all)) {
+      if (e.which==2||e.which==3) {alert(message);return false;}}}
+      if (document.layers)
+      {document.captureEvents(Event.MOUSEDOWN);document.onmousedown=clickNS;}
+      else{document.onmouseup=clickNS;document.oncontextmenu=clickIE;}
+      document.oncontextmenu=new Function("return false")
+    </script>
+    <script language="JavaScript1.2">
+      function disableselect(e){
+      return false
+      }
+      function reEnable(){
+      return true
+      }
+      //if IE4+
+      document.onselectstart=new Function ("return false")
+      //if NS6
+      if (window.sidebar){
+      document.onmousedown=disableselect
+      document.onclick=reEnable
+      }
+      </script>
+
+
+
+<script>
+function Audio_OpeningSound() {
+  var soundBG = document.createElement("AUDIO");
+        soundBG.src = "soundEffect/OmaeWaMou.mp3";
+        soundBG.volume = 0.3;
+        soundBG.loop = true;
+        document.getElementById("button5").addEventListener("click", function(music){
+          soundBG.play();
+        },false);
+        console.log(">>>>>>>>>>");
+      }
+      Audio_OpeningSound();
+      // setTimeout(Audio_OpeningSound, 5000);
+
+
+
+
+      
+</script>
+
+
+
+
+
+
+
+
+
+
+
+</html>
+ 
+
+
+

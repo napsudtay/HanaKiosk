@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Get URL Parameter Example</title>
+  </head>
+  <body>
+    <h1>Get URL Parameter Example</h1>
+    <p>The value of the "id" parameter is: <span id="param-value"></span></p>
+
+    <script>
+      // Get the value of the "id" parameter from the URL
+      const urlParams = new URLSearchParams(window.location.search);
+      const id = urlParams.get("id");
+
+      // Update the HTML with the parameter value
+      document.getElementById("param-value").innerHTML = id;
+    </script>
+  </body>
+</html>
