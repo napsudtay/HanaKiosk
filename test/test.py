@@ -2,7 +2,7 @@ import git
 import os
 
 # Set the repository URL and local path
-repository_url = "https://github.com/napsudtay/ShibaMiniProgram.git"
+repository_url = "https://github.com/napsudtay/HanaKiosk.git"
 local_path = "testgit2"
 
 # Create the local path directory if it doesn't exist
