@@ -21,7 +21,7 @@ timeOut = 10
 image_path = 'imageBtn/'
 
 btn_ok = ['ok_btn.jpg']
-btn_receiveSupport = ['teamViewer_btn.jpg','teamViewer_btn2.jpg']
+btn_receiveSupport = ['teamViewer_btn.jpg','teamViewer_btn2.jpg','teamViewer_btn3.jpg']
 btn_copy = ['copyBT.jpg','copyBT2.jpg']
 
 def find_image_and_click(image_path,btn_jpg):
