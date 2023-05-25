@@ -21,28 +21,31 @@ timeOut = 10
 image_path = 'imageBtn/'
 
 btn_ok = ['ok_btn.jpg']
-btn_receiveSupport = ['teamViewer_btn.jpg']
-btn_copy = ['copyBT.jpg']
+btn_receiveSupport = ['teamViewer_btn.jpg','teamViewer_btn2.jpg']
+btn_copy = ['copyBT.jpg','copyBT2.jpg']
 
 def find_image_and_click(image_path,btn_jpg):
     global count
+    count = 0
+    
+    while True:
+        for btn in btn_jpg:    
+            position = pyautogui.locateOnScreen(image_path + btn, confidence=0.8)
+            if (position != None): #ถ้าเจอรูปให้ทำอะไร
+                # print('found img',position)
+                x , y= pyautogui.locateCenterOnScreen(image_path + btn, confidence=0.8)
+                print('x  y',x,y)
+                pyautogui.click(x, y)
+                count = 20
+                break
+            else:
+                count += (1 / len(btn_jpg))
+        sleep(1)
+        print('finding :',btn , count,'/',timeOut)
+        if(count >= timeOut):
+            break
 
-
-    for btn in btn_jpg:    
-        position = pyautogui.locateOnScreen(image_path + btn, confidence=0.8)
-        if (position != None): #ถ้าเจอรูปให้ทำอะไร
-            print('found img',position)
-            x , y= pyautogui.locateCenterOnScreen(image_path + btn, confidence=0.8)
-            print('x  y',x,y)
-            pyautogui.click(x, y)
-            count = 0
-        else:
-            sleep(1)
-            count += 1
-            print('count = ' , count)
-            if count >= timeOut:
-                return
-            find_image_and_click(image_path,btn_jpg)
+            
             
 
 # -----------------------------------------------------
@@ -51,6 +54,7 @@ def find_image_and_click(image_path,btn_jpg):
 program_path = r"C:\Program Files\TeamViewer\TeamViewer.exe"  # Provide the path to TeamViewer.exe
 open_program(program_path)
 print('open Team Viewer')
+sleep(3)
 
 find_image_and_click(image_path,btn_ok)
 find_image_and_click(image_path,btn_receiveSupport)
