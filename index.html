@@ -26,14 +26,14 @@
     <div class="menu" id="mainMenu" style="visibility: hidden;">
       <div class="toggle" id="button5"><ion-icon name="paw-outline"></ion-icon><h2>คลิก</h2></div>
           <li style="--i:3;">
-            <a href="#" id="button2" onclick="PopupCheckOut();"><ion-icon name="log-out-outline"></ion-icon><h2>เช็คเอาท์</h2></a>
+            <a href="#" id="button2" ontouchstart="PopupCheckOut();"><ion-icon name="log-out-outline"></ion-icon><h2>เช็คเอาท์</h2></a>
           </li>
           <li style="--i:0;">
-            <a href="#" id="button4" onclick="PopupCheckIn();"><ion-icon name="bed-outline"></ion-icon><h2>เช็คอิน</h2></a>
+            <a href="#" id="button4" ontouchstart="PopupCheckIn();"><ion-icon name="bed-outline"></ion-icon><h2>เช็คอิน</h2></a>
           </li>
-          <!-- <li style="--i:1;">
-            <a href="#" id="button6" onclick="PopupReservation();"><ion-icon name="calendar-outline"></ion-icon><h2>จองห้องพัก</h2></a>
-          </li> -->
+          <li style="--i:1;">
+            <a href="#" id="button6" ontouchstart="PopupReservation();"><ion-icon name="calendar-outline"></ion-icon><h2>จองห้องพัก</h2></a>
+          </li>
           <!-- <li style="--i:2;">
             <a href="#" ><ion-icon name="mail-outline"></ion-icon><h2>บริการเสริม</h2></a>
           </li>
@@ -41,7 +41,7 @@
             <a href="#"><ion-icon name="ellipsis-horizontal-outline"></ion-icon><h2>ข้อมูลอื่นๆ</h2></a>
           </li>
           <li style="--i:5;">
-            <a href="#" onclick="popupAction();"><ion-icon name="chatbubbles-outline"></ion-icon><h2>พูดคุย</h2></a>
+            <a href="#" ontouchstart="popupAction();"><ion-icon name="chatbubbles-outline"></ion-icon><h2>พูดคุย</h2></a>
           </li> -->
   </div>
 
@@ -68,7 +68,7 @@
                     <input type="text" class="form-input" id="bookingNumber" placeholder="Booking Number">
                 </div>
                 <div class="modal-menu">
-                  <button type="submit" class="btn btn-gradient btn-login" id="btnHomeFindBookingNumber" >ดำเนินการเช็คอินต่อ <ion-icon name="arrow-forward-outline"></ion-icon></button>
+                  <button type="button" class="btn btn-gradient btn-login" id="btnHomeFindBookingNumber">ดำเนินการเช็คอินต่อ <ion-icon name="arrow-forward-outline"></ion-icon></button>
                 </div>
 
                 <div class="modal-other-login">
@@ -81,7 +81,7 @@
                     <!-- <p>สงวนลิขสิทธิ์.<br/>ลิขสิทธิ์ (2022 - 2023) - Shibaroom.com</p> -->
                 <!-- </div> -->
                 
-
+ 
                   <div class="keypad">
                     <button class="keypad-button" type="button">1</button>
                     <button class="keypad-button" type="button">2</button>
@@ -103,20 +103,30 @@
                   // Get the keypad input element
                   const keypadInput = document.getElementById("bookingNumber");
           
-                  //Sound botton
-                  var audio_button_click= document.createElement("AUDIO");
-                  document.body.appendChild(audio_button_click);
-                  audio_button_click.src = "soundEffect/system/button_click.wav";
-                  
-                  // Add click event listeners to the buttons
+                  //Sound button
+                  const audioButton = new Audio("soundEffect/system/button_click.wav");
+
+                  // Add touch event listeners to the buttons
                   buttons.forEach((button) => {
-                    button.addEventListener("click", () => {
-                      const number = button.textContent;
-                      // console.log(number);
-                      keypadInput.value += number;
-                      audio_button_click.play();
-                    });
+                      button.addEventListener("touchstart", (event) => {
+                          event.preventDefault();
+                          const number = event.target.textContent;
+                          keypadInput.value += number;
+                          audioButton.play();
+
+                          if(number == 'ลบ'){
+                            if (keypadInput.value.length > 0) {
+                              // Remove the last character from the input value
+                              var inputValue = keypadInput.value.slice(0, -3);
+                              keypadInput.value = inputValue;
+                            }
+                          }
+                      });
                   });
+
+                  document.getElementById("btnHomeFindBookingNumber").addEventListener("touchstart", () => {
+  updateHomeFindBookingNumber( keypadInput.value );
+});
                 </script>
 
             </form>
@@ -140,7 +150,7 @@
               <input type="text" class="form-input" id="bookingNumberCheckOut" placeholder="Booking Number">
           </div>
           <div class="modal-menu">
-            <button type="submit" class="btn btn-gradient btn-login" id="btnHomeFindBookingNumber" >ดำเนินการเช็คเอาท์ต่อ <ion-icon name="arrow-forward-outline"></ion-icon></button>
+            <button type="button" class="btn btn-gradient btn-login" id="btnHomeFindBookingNumberCheckOut" >ดำเนินการเช็คเอาท์ต่อ <ion-icon name="arrow-forward-outline"></ion-icon></button>
           </div>
 
           <div class="modal-other-login">
@@ -163,6 +173,9 @@
             <button class="keypad-button" type="button">0</button>
           </div>
 
+
+
+          
         <script>
           // Get the keypad buttons
           const buttonsCheckOut = document.querySelectorAll(".keypad-button");
@@ -170,20 +183,32 @@
           // Get the keypad input element
           const keypadInputCheckOut = document.getElementById("bookingNumberCheckOut");
           
-          //Sound botton
-          var audio_button_click= document.createElement("AUDIO");
-          document.body.appendChild(audio_button_click);
-          audio_button_click.src = "soundEffect/system/button_click.wav";
 
-          // Add click event listeners to the buttons
+          //Sound button
+          const audioButton2 = new Audio("soundEffect/system/button_click.wav");
+
+          // Add touch event listeners to the buttons
           buttonsCheckOut.forEach((button) => {
-            button.addEventListener("click", () => {
-              const number = button.textContent;
-              // console.log(number);
+          button.addEventListener("touchstart", (event) => {
+              event.preventDefault();
+              const number = event.target.textContent;
               keypadInputCheckOut.value += number;
-              audio_button_click.play();
-            });
+              audioButton.play();
+
+              if(number == 'ลบ'){
+                if (keypadInputCheckOut.value.length > 0) {
+                  // Remove the last character from the input value
+                  var inputValue = keypadInputCheckOut.value.slice(0, -3);
+                  keypadInputCheckOut.value = inputValue;
+                }
+              }
           });
+      });
+          
+      document.getElementById("btnHomeFindBookingNumberCheckOut").addEventListener("touchstart", () => {
+        update_CheckOut_FindBookingNumber( keypadInputCheckOut.value );
+        // console.log(keypadInputCheckOut.value);
+      });
         </script>
 
 
@@ -211,7 +236,7 @@
                   <input type="text" class="form-input" id="phoneNumber" placeholder="ใส่เบอร์โทรศัพท์">
               </div>
               <div class="modal-menu">
-                <button type="submit" class="btn btn-gradient btn-login" id="btnFillPhoneNumber" >ดำเนินการต่อ <ion-icon name="arrow-forward-outline"></ion-icon></button>
+                <button type="button" class="btn btn-gradient btn-login" id="btnFillPhoneNumber" >ดำเนินการต่อ <ion-icon name="arrow-forward-outline"></ion-icon></button>
               </div>
 
 
@@ -236,21 +261,35 @@
               // Get the keypad input element
               const keypadInputFillPhone = document.getElementById("phoneNumber");
         
-              //Sound botton
-              var audio_button_click= document.createElement("AUDIO");
-              document.body.appendChild(audio_button_click);
-              audio_button_click.src = "soundEffect/system/button_click.wav";
-              
-              // Add click event listeners to the buttons
+
+
+              //Sound button
+              const audio_button_click_fillPhone = new Audio("soundEffect/system/button_click.wav");
+
+              // Add touch event listeners to the buttons
               buttonsFillPhone.forEach((button) => {
-                button.addEventListener("click", () => {
-                  const number = button.textContent;
-                  // console.log(number);
-                  keypadInputFillPhone.value += number;
-                  audio_button_click.play();
-                });
+                  button.addEventListener("touchstart", (event) => {
+                      event.preventDefault();
+                      const number = event.target.textContent;
+                      keypadInputFillPhone.value += number;
+                      audio_button_click_fillPhone.play();
+
+                      if(number == 'ลบ'){
+                        if (keypadInputFillPhone.value.length > 0) {
+                          // Remove the last character from the input value
+                          var inputValue = keypadInputFillPhone.value.slice(0, -3);
+                          keypadInputFillPhone.value = inputValue;
+                        }
+                      }
+                  });
               });
-            </script>
+
+              document.getElementById("btnFillPhoneNumber").addEventListener("touchstart", () => {
+                afterFillPhoneNumber( keypadInputFillPhone.value );
+              });
+              </script>
+
+        
 
 
           </form>
@@ -446,32 +485,32 @@
 
 <section class="modal-fillPhone-Reservation" id="modal-fillPhone-Reservation" >
   <div class="modal-container" >
-      <button class="close-btn" id="close-phone" onclick="ClosePopupCheckIn();">
+      <button class="close-btn" id="close-phone" ontouchstart="ClosePopupCheckIn();">
           <i><ion-icon name="close-outline"></ion-icon></i>
       </button>
       <div class="modal-content">
           <form action="#" class="modal-form" id="formFillPhoneNumberReservation">
               <div>
                   <label for="">กรุณาใส่หมายเลขโทรศัพท์ของท่าน</label>
-                  <input type="text" class="form-input" id="phoneBox" placeholder="YOUR Phone Number">
+                  <input type="text" class="form-input" id="phoneBox" placeholder="Your Phone Number">
               </div>
               <div class="modal-menu">
-                <button type="submit" class="btn btn-gradient btn-login" id="btnFillPhoneReservation" >ดำเนินการต่อ <ion-icon name="arrow-forward-outline"></ion-icon></button>
+                <button type="button" class="btn btn-gradient btn-login" id="btnFillPhoneReservation" >ดำเนินการต่อ <ion-icon name="arrow-forward-outline"></ion-icon></button>
               </div>
 
 
               <div class="keypad">
-                <button class="keypad-button" type="button" onclick="sendkeyPhoneReservation('1')">1</button>
-                <button class="keypad-button" type="button" onclick="sendkeyPhoneReservation('2')">2</button>
-                <button class="keypad-button" type="button" onclick="sendkeyPhoneReservation('3')">3</button>
-                <button class="keypad-button" type="button" onclick="sendkeyPhoneReservation('4')">4</button>
-                <button class="keypad-button" type="button" onclick="sendkeyPhoneReservation('5')">5</button>
-                <button class="keypad-button" type="button" onclick="sendkeyPhoneReservation('6')">6</button>
-                <button class="keypad-button" type="button" onclick="sendkeyPhoneReservation('7')">7</button>
-                <button class="keypad-button" type="button" onclick="sendkeyPhoneReservation('8')">8</button>
-                <button class="keypad-button" type="button" onclick="sendkeyPhoneReservation('9')">9</button>
-                <button class="keypad-button" type="button" onclick="sendkeyPhoneReservation('0')">0</button>
-                <button class="keypad-button" type="reset" style="background-color: rgb(255, 188, 188);">ลบ</button>
+                <button class="keypad-button" type="button" ontouchstart="sendkeyPhoneReservation('1')">1</button>
+                <button class="keypad-button" type="button" ontouchstart="sendkeyPhoneReservation('2')">2</button>
+                <button class="keypad-button" type="button" ontouchstart="sendkeyPhoneReservation('3')">3</button>
+                <button class="keypad-button" type="button" ontouchstart="sendkeyPhoneReservation('4')">4</button>
+                <button class="keypad-button" type="button" ontouchstart="sendkeyPhoneReservation('5')">5</button>
+                <button class="keypad-button" type="button" ontouchstart="sendkeyPhoneReservation('6')">6</button>
+                <button class="keypad-button" type="button" ontouchstart="sendkeyPhoneReservation('7')">7</button>
+                <button class="keypad-button" type="button" ontouchstart="sendkeyPhoneReservation('8')">8</button>
+                <button class="keypad-button" type="button" ontouchstart="sendkeyPhoneReservation('9')">9</button>
+                <button class="keypad-button" type="button" ontouchstart="sendkeyPhoneReservation('0')">0</button>
+                <button class="keypad-button" type="button" ontouchstart="sendkeyPhoneReservation('ลบ')" style="background-color: rgb(255, 188, 188);">ลบ</button>
 
               </div>
 
@@ -479,15 +518,26 @@
               // Get the keypad input element
               const keypadInputPhoneReservation = document.getElementById("phoneBox");
 
-              //Sound botton
-              var audio_button_click= document.createElement("AUDIO");
-              document.body.appendChild(audio_button_click);
-              audio_button_click.src = "soundEffect/system/button_click.wav";
+            //Sound button
+            const audioButton3 = new Audio("soundEffect/system/button_click.wav");
+
 
               function sendkeyPhoneReservation(key){
                 keypadInputPhoneReservation.value += key;
-                audio_button_click.play();
+                audioButton3.play();
+                if(key == 'ลบ'){
+                  if (keypadInputPhoneReservation.value.length > 0) {
+                    // Remove the last character from the input value
+                    var inputValue = keypadInputPhoneReservation.value.slice(0, -3);
+                    keypadInputPhoneReservation.value = inputValue;
+                  }
+                }
               }
+
+
+              document.getElementById("btnFillPhoneReservation").addEventListener("touchstart", () => {
+                btn_check_reservation_checkin_or_checkout( keypadInputPhoneReservation.value );  
+              }); //เปลี่ยนปุ่มsubmit ให้ไปเรียกฟังค์ชั่นอื่นแทน
             </script>
 
 
@@ -511,49 +561,49 @@
 
 <section class="modal-fillName-Reservation-Keyboard" id="modal-fillName-Reservation-Keyboard" >
   <div class="modal-container-Reservation" >
-      <button class="close-btn" id="close-phone" onclick="CloseAllPopup();">
+      <button class="close-btn" id="close-phone" ontouchstart="CloseAllPopup();">
           <i><ion-icon name="close-outline"></ion-icon></i>
       </button>
       <div class="modal-content">
           <form action="#" class="modal-form" id="formFillName">
               <div>
                   <label for="">กรุณาใส่ชื่อของท่าน</label>
-                  <input type="text" class="form-input" id="nameBox" placeholder="YOUR NAME">
+                  <input type="text" class="form-input" id="nameBox" placeholder="Your Name">
               </div>
               <div class="modal-menu">
-                <button type="submit" class="btn btn-gradient btn-login" id="btnFillName" >ดำเนินการต่อ <ion-icon name="arrow-forward-outline"></ion-icon></button>
+                <button type="button" class="btn btn-gradient btn-login" id="btnFillName" >ดำเนินการต่อ <ion-icon name="arrow-forward-outline"></ion-icon></button>
               </div>
 
 
               <div class="keypad">
-                <button class="keypad-button" type="button" onclick="sendkey('A')">A</button>
-                <button class="keypad-button" type="button" onclick="sendkey('B')">B</button>
-                <button class="keypad-button" type="button" onclick="sendkey('C')">C</button>
-                <button class="keypad-button" type="button" onclick="sendkey('D')">D</button>
-                <button class="keypad-button" type="button" onclick="sendkey('E')">E</button>
-                <button class="keypad-button" type="button" onclick="sendkey('F')">F</button>
-                <button class="keypad-button" type="button" onclick="sendkey('G')">G</button>
-                <button class="keypad-button" type="button" onclick="sendkey('H')">H</button>
-                <button class="keypad-button" type="button" onclick="sendkey('I')">I</button>
-                <button class="keypad-button" type="button" onclick="sendkey('J')">J</button>
-                <button class="keypad-button" type="button" onclick="sendkey('K')">K</button>
-                <button class="keypad-button" type="button" onclick="sendkey('L')">L</button>
-                <button class="keypad-button" type="button" onclick="sendkey('M')">M</button>
-                <button class="keypad-button" type="button" onclick="sendkey('N')">N</button>
-                <button class="keypad-button" type="button" onclick="sendkey('O')">O</button>
-                <button class="keypad-button" type="button" onclick="sendkey('P')">P</button>
-                <button class="keypad-button" type="button" onclick="sendkey('Q')">Q</button>
-                <button class="keypad-button" type="button" onclick="sendkey('R')">R</button>
-                <button class="keypad-button" type="button" onclick="sendkey('S')">S</button>
-                <button class="keypad-button" type="button" onclick="sendkey('T')">T</button>
-                <button class="keypad-button" type="button" onclick="sendkey('U')">U</button>
-                <button class="keypad-button" type="button" onclick="sendkey('V')">V</button>
-                <button class="keypad-button" type="button" onclick="sendkey('W')">W</button>
-                <button class="keypad-button" type="button" onclick="sendkey('X')">X</button>
-                <button class="keypad-button" type="reset" style="background-color: rgb(255, 188, 188);">ลบ</button>
-                <button class="keypad-button" type="button" onclick="sendkey('Y')">Y</button>
-                <button class="keypad-button" type="button" onclick="sendkey('Z')">Z</button>
-                <button class="keypad-button" type="button" onclick="sendkey(' ')" style="background-color: rgb(211, 211, 211);">เว้น</button>
+                <button class="keypad-button" type="button" ontouchstart="sendkey('A')">A</button>
+                <button class="keypad-button" type="button" ontouchstart="sendkey('B')">B</button>
+                <button class="keypad-button" type="button" ontouchstart="sendkey('C')">C</button>
+                <button class="keypad-button" type="button" ontouchstart="sendkey('D')">D</button>
+                <button class="keypad-button" type="button" ontouchstart="sendkey('E')">E</button>
+                <button class="keypad-button" type="button" ontouchstart="sendkey('F')">F</button>
+                <button class="keypad-button" type="button" ontouchstart="sendkey('G')">G</button>
+                <button class="keypad-button" type="button" ontouchstart="sendkey('H')">H</button>
+                <button class="keypad-button" type="button" ontouchstart="sendkey('I')">I</button>
+                <button class="keypad-button" type="button" ontouchstart="sendkey('J')">J</button>
+                <button class="keypad-button" type="button" ontouchstart="sendkey('K')">K</button>
+                <button class="keypad-button" type="button" ontouchstart="sendkey('L')">L</button>
+                <button class="keypad-button" type="button" ontouchstart="sendkey('M')">M</button>
+                <button class="keypad-button" type="button" ontouchstart="sendkey('N')">N</button>
+                <button class="keypad-button" type="button" ontouchstart="sendkey('O')">O</button>
+                <button class="keypad-button" type="button" ontouchstart="sendkey('P')">P</button>
+                <button class="keypad-button" type="button" ontouchstart="sendkey('Q')">Q</button>
+                <button class="keypad-button" type="button" ontouchstart="sendkey('R')">R</button>
+                <button class="keypad-button" type="button" ontouchstart="sendkey('S')">S</button>
+                <button class="keypad-button" type="button" ontouchstart="sendkey('T')">T</button>
+                <button class="keypad-button" type="button" ontouchstart="sendkey('U')">U</button>
+                <button class="keypad-button" type="button" ontouchstart="sendkey('V')">V</button>
+                <button class="keypad-button" type="button" ontouchstart="sendkey('W')">W</button>
+                <button class="keypad-button" type="button" ontouchstart="sendkey('X')">X</button>
+                <button class="keypad-button" type="button" ontouchstart="sendkey('ลบ')"style="background-color: rgb(255, 188, 188);">ลบ</button>
+                <button class="keypad-button" type="button" ontouchstart="sendkey('Y')">Y</button>
+                <button class="keypad-button" type="button" ontouchstart="sendkey('Z')">Z</button>
+                <button class="keypad-button" type="button" ontouchstart="sendkey(' ')" style="background-color: rgb(211, 211, 211);">เว้น</button>
 
               </div>
 
@@ -562,14 +612,23 @@
               const keypadInputName = document.getElementById("nameBox");
 
               //Sound botton
-              var audio_button_click= document.createElement("AUDIO");
-              document.body.appendChild(audio_button_click);
-              audio_button_click.src = "soundEffect/system/button_click.wav";
+              const audioButton4 = new Audio("soundEffect/system/button_click.wav");
 
               function sendkey(key){
                 keypadInputName.value += key;
-                audio_button_click.play();
+                audioButton4.play();
+                if(key == 'ลบ'){
+                  if (keypadInputName.value.length > 0) {
+                    // Remove the last character from the input value
+                    var inputValue = keypadInputName.value.slice(0, -3);
+                    keypadInputName.value = inputValue;
+                  }
+                }
               }
+
+              document.getElementById("btnFillName").addEventListener("touchstart", () => {
+                btn_check_reservation_checkin_or_checkout( keypadInputName.value );  
+              }); //เปลี่ยนปุ่มsubmit ให้ไปเรียกฟังค์ชั่นgเดิมของมัน
             </script>
 
 
@@ -590,7 +649,7 @@
 <section class="modal-show-qrcode-pay" id="modal-show-qrcode-pay" >
   <div class="modal-container" >
 
-      <button class="close-btn" id="close-phone" onclick="CloseAllPopup();">
+      <button class="close-btn" id="close-phone" ontouchstart="CloseAllPopup();">
           <i><ion-icon name="close-outline"></ion-icon></i>
       </button>
 
@@ -817,7 +876,7 @@
     <button id="button7" class="btn" onclick=""><ion-icon name="accessibility-outline"></ion-icon>Dance</button>
   </div>
  
-<script src="scriptindex1.js"></script><!-- ?v=9999 -->
+<script src="scriptindex.js"></script><!-- ?v=9999 -->
 <script src="apiShibaPortal.js"></script>
 <script src="apiShibaGoogleSC.js"></script>
 <script src="checkDateAndTime.js"></script>

@@ -192,7 +192,8 @@ async function btn_check_reservation_checkin_or_checkout() {  // อันนี
     } else if (page_reservation === 5) {
         console.log('page_reservation 5 = ', page_reservation);
         console.log("เข้าหน้าเลือกใส่เบอร์โทร");
-        document.getElementById("formFillPhoneNumberReservation").addEventListener("submit", btn_check_reservation_checkin_or_checkout); //เปลี่ยนปุ่มsubmit ให้ไปเรียกฟังค์ชั่นอื่นแทน
+        // document.getElementById("formFillPhoneNumberReservation").addEventListener("submit", btn_check_reservation_checkin_or_checkout); //เปลี่ยนปุ่มsubmit ให้ไปเรียกฟังค์ชั่นอื่นแทน
+        
         document.getElementById("modal-fillPhone-Reservation").classList.add("show-modal");
         document.getElementById("modal-proof-reservation").classList.remove("show-modal");
         page_reservation++;
@@ -211,7 +212,7 @@ async function btn_check_reservation_checkin_or_checkout() {  // อันนี
         } else {
             console.log('phoneNumberReservation=',phoneNumberReservation);
             
-            document.getElementById("formFillName").addEventListener("submit", btn_check_reservation_checkin_or_checkout);//เปลี่ยนปุ่มsubmit ให้ไปเรียกฟังค์ชั่นgเดิมของมัน
+            // document.getElementById("formFillName").addEventListener("submit", btn_check_reservation_checkin_or_checkout);//เปลี่ยนปุ่มsubmit ให้ไปเรียกฟังค์ชั่นgเดิมของมัน
             document.getElementById("modal-fillName-Reservation-Keyboard").classList.add("show-modal");
             document.getElementById("modal-fillPhone-Reservation").classList.remove("show-modal");
             page_reservation++;
