@@ -41,6 +41,7 @@ async function getToken() {
     }
 
     console.log('Get token');
+    
 
 }
 

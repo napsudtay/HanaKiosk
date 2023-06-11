@@ -1,19 +1,76 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <title>Get URL Parameter Example</title>
-  </head>
-  <body>
-    <h1>Get URL Parameter Example</h1>
-    <p>The value of the "id" parameter is: <span id="param-value"></span></p>
+<head>
+  <title>SerialPort Communication</title>
+</head>
+<body>
+  <h1>SerialPort Communication</h1>
 
-    <script>
-      // Get the value of the "id" parameter from the URL
-      const urlParams = new URLSearchParams(window.location.search);
-      const id = urlParams.get("id");
+  <button id="openButton">Open Port</button>
+  <input type="text" id="messageInput" placeholder="Enter message">
+  <button id="sendButton" disabled>Send Message</button>
 
-      // Update the HTML with the parameter value
-      document.getElementById("param-value").innerHTML = id;
-    </script>
-  </body>
+  <textarea id="serialMonitor" rows="10" cols="50" readonly></textarea>
+
+  <script>
+    let port;
+    let reader;
+    let monitorOutput;
+
+    async function openSerial() {
+      try {
+        port = await navigator.serial.requestPort();
+        await port.open({ baudRate: 9600 });
+
+        console.log('Port opened successfully.');
+
+        reader = port.readable.getReader();
+        monitorOutput = document.getElementById('serialMonitor');
+        document.getElementById('sendButton').disabled = false;
+
+        // Start reading data from the serial port
+        readSerialData();
+      } catch (error) {
+        console.error('Error:', error);
+      }
+    }
+
+    async function sendSerialMessage() {
+      try {
+        const writer = port.writable.getWriter();
+        const encoder = new TextEncoder();
+
+        const message = document.getElementById('messageInput').value;
+        const encodedMessage = encoder.encode(message);
+
+        await writer.write(encodedMessage);
+        await writer.close();
+
+        console.log('Message sent successfully.');
+      } catch (error) {
+        console.error('Error:', error);
+      }
+    }
+
+    async function readSerialData() {
+      try {
+        while (true) {
+          const { value, done } = await reader.read();
+          if (done) {
+            break;
+          }
+          // Convert the received data to a string and append it to the serial monitor
+          const decoder = new TextDecoder();
+          const decodedData = decoder.decode(value);
+          monitorOutput.value += decodedData;
+        }
+      } catch (error) {
+        console.error('Error:', error);
+      }
+    }
+
+    document.getElementById('openButton').addEventListener('click', openSerial);
+    document.getElementById('sendButton').addEventListener('click', sendSerialMessage);
+  </script>
+</body>
 </html>

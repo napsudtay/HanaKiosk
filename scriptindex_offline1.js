@@ -362,10 +362,10 @@ let roomNumber = [];
 
 
 
-formCheckOutFindBookingNumber.addEventListener(
-  "submit",
-  update_CheckOut_FindBookingNumber
-);
+// formCheckOutFindBookingNumber.addEventListener(
+//   "submit",
+//   update_CheckOut_FindBookingNumber
+// );
 
 
 let globalReadClipboard = "";
@@ -421,7 +421,8 @@ async function readClipboard() {
 
 async function update_CheckOut_FindBookingNumber(e) {
   ContentLoading.classList.add("show-modal"); //เปิดหน้าต่างโหลดเนื้อหา
-  const bookingValCheckOut = e.srcElement[0].value.toLowerCase();
+  // const bookingValCheckOut = e.srcElement[0].value.toLowerCase();
+  const bookingValCheckOut = e;
   audio_next_page.play();
   if (bookingValCheckOut === "") {
     ContentLoading.classList.remove("show-modal"); //ปิดหน้าต่างโหลดเนื้อหา
@@ -474,10 +475,6 @@ async function update_CheckOut_FindBookingNumber(e) {
 
 
 
-formHomeFindBookingNumber.addEventListener(
-  "submit",
-  updateHomeFindBookingNumber
-);
 
 
 
@@ -589,10 +586,11 @@ audio_success.src = "soundEffect/system/success.wav";
 //-------------- check in --------------
 
 async function updateHomeFindBookingNumber(e) {
+  // console.log(e);
   unit_uuid = []
   roomNumber = [];
   ContentLoading.classList.add("show-modal"); //เปิดหน้าต่างโหลดเนื้อหา
-  const bookingVal = e.srcElement[0].value.toLowerCase();
+  const bookingVal = e;
   // console.log(bookingNumber);
   audio_next_page.play();
 
@@ -602,7 +600,7 @@ async function updateHomeFindBookingNumber(e) {
     PopupWarningWindows();
 
   // } else if (bookingVal !== booking_offline ) {
-  } else if (bookingVal !== booking_offline && bookingVal !== '0') {
+  } else if (bookingVal !== booking_offline && bookingVal !== '123456') {
 
       console.log("error", bookingVal);
       ModalWarningWindowsContent.innerText = `ไม่พบหมายเลขบุ๊คกิ้งนี้\nกรุณาลองอีกครั้งหรือติดต่อพนักงาน`;
@@ -1109,10 +1107,11 @@ async function afterCompareFace(result, faceDis) {
 
 
 
-FormFillPhoneNumber.addEventListener("submit", afterFillPhoneNumber);
+// FormFillPhoneNumber.addEventListener("submit", afterFillPhoneNumber);
 
 async function afterFillPhoneNumber(e) {
-  const phoneNumber = e.srcElement[0].value;
+  // const phoneNumber = e.srcElement[0].value;
+  const phoneNumber = e;
 
   if (phoneNumber.length !== 10) { // หมายเลขโทรศัพท์ไม่ถูกต้องหรือไม่ถึง 10 ตัว
     ModalWarningWindowsContent.innerText = `หมายเลขโทรศัพท์ไม่ถูกต้อง`;

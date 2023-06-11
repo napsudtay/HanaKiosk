@@ -394,8 +394,8 @@ async function createBooking(token, dataJson) {
 
 
   dataJson = {
-            checkIn:"2023-03-05",
-            checkOut:"2023-03-06",
+            checkIn:"2023-06-11",
+            checkOut:"2023-06-12",
             bookingID:"123456789",
             // channelUUID:"9728b011-6fe6-4564-b8a7-f05ce4e67bb3",
             channelUUID:"1051eec7-b48b-4c4e-abc7-b9d61e6eb8cd",
