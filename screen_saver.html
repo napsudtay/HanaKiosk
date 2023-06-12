@@ -17,7 +17,10 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            background-color: black;
+            background-image: url('texture/bg.jpg'); /* Replace 'img.jpg' with the path to your image */
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-position: center;
         }
 
         .full-page-image {
@@ -31,6 +34,7 @@
         }
 
         .text {
+            
             text-align: center;
             color: rgb(255, 255, 255);
             font-size: 40px;
@@ -44,8 +48,9 @@
         }
 
         .unmute-button {
+            z-index: 999;
             position: absolute;
-            bottom: 50px;
+            bottom: 470px;
             left: 50%;
             transform: translateX(-50%);
             background-color: rgb(255, 196, 0);
@@ -66,40 +71,54 @@
     <!-- <img src="texture/Hana-pic.jpg" alt="Full Page Image" class="full-page-image" id="btnPage"> -->
     <video src="texture/video-screen-saver.mp4" class="full-page-image" id="btnPage" autoplay muted loop></video>
 
-    <button class="text" id="gotoHomeButton">คลิกเพื่อทำรายการ</button>
-    <button class="unmute-button" id="unmuteButton">เปิดเสียง</button>
+    <!-- <button class="text" id="gotoHomeButton">คลิกเพื่อทำรายการ</button> -->
+    
+    <button class="unmute-button" id="unmuteButton">คลิกสองครั้งเพื่อ เปิดเสียง</button>
 
     <!-- กดที่ปุ่ม แล้วให้มันย้อนกลับไปหน้าเพจหลัก -->
-    <script>
-        document.getElementById('gotoHomeButton').addEventListener('click', function () {
+    <!-- <script>
+        document.getElementById('gotoHomeButton').addEventListener('touchstart', function () {
             // window.location.href = 'http://127.0.0.1:3001/?#';
             window.history.back();
         });
-    </script>
+    </script> -->
 
 
     <!-- กดที่VDO แล้วให้มันย้อนกลับไปหน้าเพจหลัก -->
-    <script>
-        document.getElementById('btnPage').addEventListener('click', function () {
+    <!-- <script>
+        document.getElementById('btnPage').addEventListener('touchstart', function () {
             // window.location.href = 'http://127.0.0.1:3001/?#';
             window.history.back();
         });
+    </script> -->
+
+
+    <script>
+        // Add event listener for touching the background
+        document.addEventListener('touchstart', function () {
+            window.history.back();
+        });
+
     </script>
 
-    <!-- กดที่หน้าจอ แล้วให้มันย้อนกลับไปหน้าเพจหลัก -->
-    <script>
-        // document.addEventListener('click', function () {
-        //     window.history.back();
-        // });
-    </script>
 
 
     <script>
         const video = document.getElementById('btnPage');
         const unmuteButton = document.getElementById('unmuteButton');
 
-        unmuteButton.addEventListener('click', function () {
+        video.addEventListener('touchstart', function () {
+            event.stopPropagation();
             video.muted = false;
+            video.play();
+            unmuteButton.style.display = 'none'; // Hide the unmute button once clicked
+        });
+
+        unmuteButton.addEventListener('touchstart', function () {
+            event.stopPropagation();
+            video.muted = false;
+            console.log(video.muted);
+            video.play();
             unmuteButton.style.display = 'none'; // Hide the unmute button once clicked
         });
 
@@ -109,6 +128,8 @@
                 unmuteButton.style.display = 'none'; // Hide the unmute button once clicked
             }
         });
+
+        
     </script>
 
 

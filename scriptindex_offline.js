@@ -278,7 +278,35 @@ function CloseAllPopup() {
 
 
 
+  SetTimeToScreenSaver(120);//ตั้งค่าเวลาให้ ไปหน้าพักหน้าจอ
+
 }
+
+
+var onStart = true;
+if(onStart){
+  onStart = false;
+  console.log('onStart');
+  SetTimeToScreenSaver(120);//ตั้งค่าเวลาให้ ไปหน้าพักหน้าจอ
+} 
+
+
+// clearInterval(coundCheckTimeoutActive_goToScreenSaver);
+var coundCheckTimeoutActive_goToScreenSaver;
+function SetTimeToScreenSaver(coundCheckTimeout_goToScreenSaver) {
+  console.log('SetTimeToScreenSaver');
+  
+  coundCheckTimeoutActive_goToScreenSaver = window.setInterval(function () {
+    coundCheckTimeout_goToScreenSaver -= 1;
+    console.log('SetTimeToScreenSaver = ',coundCheckTimeout_goToScreenSaver);
+
+    if (coundCheckTimeout_goToScreenSaver <= 0) {
+      window.location.href = 'http://127.0.0.1:3001/screen_saver.html';
+    }
+
+  }, 1000);
+}
+
 
 
 

@@ -37,7 +37,7 @@ var page_reservation = 1;
 var roomPirce_choose = 750;
 var quantity_choose = 1;
 var addBed_choose = 0;
-
+var number_reservation = 123456;
 var reservation_checkin = '13/03/2023';
 var reservation_checkout = '14/03/2023';
 var phoneNumberReservation;
@@ -222,6 +222,8 @@ async function btn_check_reservation_checkin_or_checkout() {  // อันนี
         }
     }else if (page_reservation === 8) {
         console.log("สร้างการจอง");
+
+        number_reservation = generateRandomNumber();
         
         document.getElementById("modal-show-qrcode-pay").classList.remove("show-modal");
         document.getElementById("modal-reservation-successful").classList.add("show-modal");
@@ -229,7 +231,7 @@ async function btn_check_reservation_checkin_or_checkout() {  // อันนี
         
         document.getElementById("modal-reservation-successful-content").classList.toggle("active");
         document.getElementById("togglesymbol-reservation-successful").classList.toggle("active");
-        document.getElementById("modal-reservation-successful-sendroomnumber").innerText = '862445402';
+        document.getElementById("modal-reservation-successful-sendroomnumber").innerText = number_reservation;
 
 
     }
