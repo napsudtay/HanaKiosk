@@ -5,75 +5,8 @@
     <title>Button Click Example</title>
     <script src="/getParameterURL.js"></script>
     <script src="/apiShibaPortal.js"></script>
-    <script>
-        async function handleClick() {
+    
 
-
-            await getToken();
-            console.log(">>>" +token);
-
-            var val = await payapi();
-
-            var result = ">>>" + JSON.stringify(val);
-
-            document.getElementById("output").innerHTML = result;
-        }
-
-
-        async function payapi() {
-            const data = {
-                "amount": 130000, // (required) amount with 2 decimal i.e. 40 thb input 4000
-                "booking_id": "54abce4c-0085-4027-a5eb-b410191cd468", // (required) save in meta_data in OMISE charge detail
-                "site_id": "a0d07ab1-0af1-4ea0-b7f4-42a0e58a556e", // (required) save in meta_data in OMIS charge detail
-                "expire_min": 30, // (optional) default : 60 min
-                "currency": "thb" // (optional) default : thb
-            }
-
-            var options = {
-                "async": true,
-                "crossDomain": true,
-                "method": "POST",
-                "contentType": 'application/json',
-                "headers": {
-                    "cache-control": "no-cache",
-                    "Authorization": "Bearer " + token
-                },
-                'payload': JSON.stringify(data)
-            };
-
-            let res = await fetch('https://shiba-api.shibaroomth.com/payment-gateway/create-promptpay-charge',options)
-                .then((response) => response.json())
-                .then((body) => {
-                    return body;
-                });
-            return res;
-        }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    </script>
 </head>
 
 <body>
@@ -81,5 +14,51 @@
     <button onclick="handleClick()">Click Me</button>
     <div id="output"></div>
 </body>
+
+<script>
+    async function handleClick() {
+
+
+        await getToken();
+        console.log(">>>" +token);
+
+        var val = await payapi();
+
+        var result = ">>>" + JSON.stringify(val);
+
+        document.getElementById("output").innerHTML = result;
+    }
+
+
+    async function payapi() {
+        const data = {
+            "amount": 130000, // (required) amount with 2 decimal i.e. 40 thb input 4000
+            "booking_id": "54abce4c-0085-4027-a5eb-b410191cd468", // (required) save in meta_data in OMISE charge detail
+            "site_id": "a0d07ab1-0af1-4ea0-b7f4-42a0e58a556e", // (required) save in meta_data in OMIS charge detail
+            "expire_min": 30, // (optional) default : 60 min
+            "currency": "thb" // (optional) default : thb
+        }
+
+        var options = {
+            "async": true,
+            "crossDomain": true,
+            "method": "POST",
+            "contentType": 'application/json',
+            "headers": {
+                "cache-control": "no-cache",
+                "Authorization": "Bearer " + token
+            },
+            'payload': JSON.stringify(data)
+        };
+
+        let res = await fetch('https://3867-2001-fb1-c4-cb7d-487-ca69-4e9f-788d.ap.ngrok.io',options)
+            .then((response) => response.json())
+            .then((body) => {
+                return body;
+            });
+        return res;
+    }
+
+</script>
 
 </html>

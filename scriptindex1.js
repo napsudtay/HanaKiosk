@@ -121,8 +121,9 @@ function PopupCheckIn() {
   clearInterval(coundCheckTimeoutActive_goToScreenSaver);
   ShowDateTime();
   SetTimeOutAll(); //เรียกฟังก์ชั่นตั้งการหมดเวลาทำรายการ
+  console.log("PopupCheckIn > triger_checkMail");
   
-  // triger_checkMail();
+  triger_checkMail();
 }
 
 
@@ -140,23 +141,26 @@ setTimeout(function() {
 
 
 
-// const url_api_checkMail = "https://script.google.com/macros/s/AKfycbzrNQyT1-0-EnAA57gHe5fR9iZcEX85uasY0Ae5uIrr1yKGr49cTLTag2ra2TDrnr_w/exec";
 
-// function triger_checkMail() {
-//   const requestOptions = {
-//     "content-type": "application/json",
-//     method: "GET",
-//     cache: "no-cache",
-//   };
+const url_api_checkMail = "https://script.google.com/macros/s/AKfycbzz43StYpJHe8ZsbsYnOZXiFvx2oVUlSQOasfMpAAHUNXUxxGp9OxSiFgLYVryjmzM/exec";
 
-//   let getValue = fetch(url_api_checkMail, requestOptions)
-//     .then((response) => response.text())
-//     .then((data) => {
-//       // console.log("post = " , data);
-//       return data;
-//     });
-//   return getValue;
-// }
+function triger_checkMail() {
+  console.log("triger_checkMail");
+
+  const requestOptions = {
+    "content-type": "application/json",
+    method: "GET",
+    cache: "no-cache",
+  };
+
+  let getValue = fetch(url_api_checkMail, requestOptions)
+    .then((response) => response.text())
+    .then((data) => {
+      // console.log("post = " , data);
+      return data;
+    });
+  return getValue;
+}
 
 function ClosePopupCheckIn() {
   CloseAllPopup(); //เรียกใช้ฟังก์ชั่นปิดทุกหน้าต่าง
