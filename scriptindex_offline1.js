@@ -120,6 +120,8 @@ function PopupCheckIn() {
   ShowDateTime();
   SetTimeOutAll(); //เรียกฟังก์ชั่นตั้งการหมดเวลาทำรายการ
   // triger_checkMail();
+  
+
 }
 
 
@@ -1167,15 +1169,27 @@ async function afterFillPhoneNumber(e) {
     ScanfaceSuccessfulContent.innerText = `การยืนยันตัวสำเร็จ
   (กรุณาถ่ายรูปหมายเลขห้องพักและรหัสเก็บเอาไว้เพื่อช่วยในการจดจำ)`;
 
+  var randomNum = Math.floor(Math.random() * 7) + 1;
+
+  // -------- ส่งค่าไปที่ python เพื่อส่งไป Serial Port -------
+  let writeClipboardVal = {"method": "SendSerial", "portPin": randomNum.toString()};
+  let writeClipboard = JSON.stringify(writeClipboardVal);
+  console.log("writeClipboardVal : " , writeClipboardVal);
+  copyToClipboard(writeClipboard);
+
 
   var textShowRoom = '';
     for(var i = 1; i <= quantity_choose; i++){
-      textShowRoom += 'ห้อง 1/' + i + ' รหัส ' + generateRandomNumber() + '\n';
+      textShowRoom += 'ห้อง ' + randomNum + ' รหัส ' + generateRandomNumber() + '\n';
     }
 
 
 
     // console.log('textShowRoom = ' + textShowRoom);
+    
+    
+    
+    
 
 
 

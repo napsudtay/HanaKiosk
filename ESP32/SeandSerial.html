@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>SerialPort Communication ESP32</title>
+</head>
+<body>
+  <h1>SerialPort Communication</h1>
+
+  <button id="openButton" onclick="openSerial()">Open Port</button>
+  <input type="text" id="messageInput" placeholder="Enter message">
+  <button id="sendButton" onclick="sendSerialMessage('1')" disabled>Send Message</button>
+
+  <textarea id="serialMonitor" rows="10" cols="50" readonly></textarea>
+
+  <script src="\ESP32\SeandSerial.js"></script>
+</body>
+</html>

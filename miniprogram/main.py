@@ -5,6 +5,14 @@ import readIdCard
 import faceCompare
 import playsound #pip install playsound==1.2.2
 import pyautogui #pyautogui
+import SendSerial
+
+
+print("opening tv")
+SendSerial.sendToSerial('9')
+sleep(5)
+SendSerial.sendToSerial('8')
+print("opened tv")
 
 
 
@@ -22,7 +30,6 @@ def readClipboard():
 
 def wirteClipboard(textWrite):
     clipboard.copy(json.dumps(textWrite))
-
 
 
 
@@ -114,10 +121,11 @@ def pressKey():
 
 
 
+
 def mainLoop():
     readClipboardValue = readClipboard()
     data = False
-    # print(readClipboardValue)
+    # print(">>>" , readClipboardValue)
     try:
         readText = readClipboardValue['method'] 
     # print(readText)
@@ -177,18 +185,29 @@ def mainLoop():
                             }
                     }
             wirteClipboard(copyToJava)
+
+        case "SendSerial":
+            portPin = readClipboardValue['portPin'] 
+            print(">>>>>>>" , readText , portPin)
+            print("SendSerial", end="\r")
+            SendSerial.sendToSerial(portPin)
+            wirteClipboard( {'method': True} )
+            print("Send ok")
+
+            
+            
             
 
             
 
 # --------- {"method": "readCard"}
-
+# --------- {"method": "SendSerial", "portPin": "1"}
 
 
 
 
 waitText = True
-
+# SendSerial.sendToSerial("1")
 
 while (True):
     sleep(1)

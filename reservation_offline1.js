@@ -68,7 +68,7 @@ async function btn_check_reservation_checkin_or_checkout() {  // อันนี
         document.getElementById("phoneBox").value= '';
 
 
-
+        
 
       
 
